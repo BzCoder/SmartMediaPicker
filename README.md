@@ -41,4 +41,12 @@ CameraDialogUtil.builder(getSupportFragmentManager())
                         .withMaxWidth(50)
                         .build()
                         .show();
+```
 
+获取资源：
+
+```java
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        List<String> resultData = new ArrayList<>();
+        resultData.addAll(CameraDialogUtil.getResultData(this, requestCode, resultCode, data));
+```

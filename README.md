@@ -1,5 +1,6 @@
 # MediaPicker
 一款方便好用的多媒体选择器。
+[![](https://jitpack.io/v/BzCoder/MediaPicker.svg)](https://jitpack.io/#BzCoder/MediaPicker)
 封装了以下两个库。
 - [知乎matisse](https://github.com/CJT2325/CameraView)
 - [仿微信拍照Android控件](https://github.com/CJT2325/CameraView)

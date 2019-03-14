@@ -4,6 +4,23 @@
 - [知乎matisse](https://github.com/CJT2325/CameraView)
 - [仿微信拍照Android控件](https://github.com/CJT2325/CameraView)
 ## 使用方法
+gradle添加：
+```gradle
+
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+
+
+	dependencies {
+	        implementation 'com.github.BzCoder:MediaPicker:Tag'
+	}
+```
+代码添加：
 ```java
 CameraDialogUtil.builder(getSupportFragmentManager())
                         .withMaxImageSelectable(5)
@@ -17,4 +34,3 @@ CameraDialogUtil.builder(getSupportFragmentManager())
                         .build()
                         .show();
 
-```

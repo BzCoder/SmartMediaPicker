@@ -6,6 +6,11 @@
 - [仿微信拍照Android控件](https://github.com/CJT2325/CameraView)
 ## 演示
 
+| 图片选择                  | 仿微信拍照录像                    | 
+|:------------------------------:|:---------------------------------:|
+|![](image/20190315005039.gif) | ![](image/20190315005454.gif) |
+
+
 ## 使用方法
 gradle添加：
 ```gradle
@@ -20,7 +25,7 @@ gradle添加：
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:MediaPicker:Tag'
+	        implementation 'com.github.BzCoder:MediaPicker:1.0.0'
 	}
 ```
 代码添加：

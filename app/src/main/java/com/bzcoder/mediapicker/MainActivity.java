@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .withCountable(true)
                         .withMaxVideoLength(15 * 1000)
                         .withMaxVideoSize(1)
-                        .withMaxHeight(100)
+                        .withMaxHeight(1920)
                         .withMaxImageSize(5)
-                        .withMaxWidth(50)
+                        .withMaxWidth(1920)
                         .build()
                         .show();
                 break;

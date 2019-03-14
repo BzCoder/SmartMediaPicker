@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PhotoDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- activity不变暗 -->
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowEnterAnimation">@anim/camera_push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/camera_push_bottom_out</item>
+    </style>
+</resources>

@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+    }
+
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_7
+    }
+    lintOptions {
+        abortOnError false
+    }
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        api "com.zhihu.android:matisse:0.5.2-beta4"
+        api 'com.github.bumptech.glide:glide:4.7.1'
+        api "com.github.yalantis:ucrop:2.2.2"
+    }
+}
+
+
+
+

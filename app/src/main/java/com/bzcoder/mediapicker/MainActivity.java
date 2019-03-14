@@ -57,8 +57,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         List<String> resultData = CameraDialogUtil.getResultData(this, requestCode, resultCode, data);
-        if(resultData!=null){
+        if(resultData!=null && resultData.size()>0){
             tv_path.setText(Arrays.toString(resultData.toArray()));
+        }
+        else{
+            tv_path.setText("NO DATA");
         }
     }
 }

@@ -1,4 +1,4 @@
-package me.bzcoder.mediapicker.camera;
+package me.bzcoder.mediapicker.config;
 
 public interface Constant {
     int CAMERA_RESULT_CODE = 101;
@@ -10,6 +10,9 @@ public interface Constant {
 
     String CAMERA_PATH = "camera_path";
 
-    String BUTTON_STATE = "button_state";
+    String BUTTON_STATE = "BUTTON_STATE";
 
+
+
+    String DURATION = "DURATION";
 }

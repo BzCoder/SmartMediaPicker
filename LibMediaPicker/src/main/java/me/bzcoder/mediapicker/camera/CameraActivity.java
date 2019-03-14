@@ -11,17 +11,19 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.cztv.compnent.commoncamera.R;
 
+import me.bzcoder.mediapicker.R;
 import me.bzcoder.mediapicker.cameralibrary.JCameraView;
 import me.bzcoder.mediapicker.cameralibrary.listener.ClickListener;
 import me.bzcoder.mediapicker.cameralibrary.listener.ErrorListener;
 import me.bzcoder.mediapicker.cameralibrary.listener.JCameraListener;
 import me.bzcoder.mediapicker.cameralibrary.util.FileUtil;
+import me.bzcoder.mediapicker.config.Constant;
 
 
 import java.io.File;
 import java.util.ArrayList;
+
 
 /**
  * 录像照相
@@ -31,11 +33,6 @@ import java.util.ArrayList;
  */
 public class CameraActivity extends AppCompatActivity {
     private JCameraView jCameraView;
-
-
-    public String type;
-
-
     /**
      * BUTTON_STATE_ONLY_CAPTURE = 0x101;      //只能拍照
      * BUTTON_STATE_ONLY_RECORDER = 0x102;     //只能录像
@@ -43,12 +40,15 @@ public class CameraActivity extends AppCompatActivity {
      */
     public int buttonState;
 
+    public int duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        buttonState = getIntent().getIntExtra("BUTTON_STATE", JCameraView.BUTTON_STATE_BOTH);
+        buttonState = getIntent().getIntExtra(Constant.BUTTON_STATE, JCameraView.BUTTON_STATE_BOTH);
+        duration = getIntent().getIntExtra(Constant.DURATION, 10*1000);
+
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -58,6 +58,7 @@ public class CameraActivity extends AppCompatActivity {
         jCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "JCamera");
         jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
         jCameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_MIDDLE);
+        jCameraView.setDuration(duration);
         jCameraView.setErrorLisenter(new ErrorListener() {
             @Override
             public void onError() {

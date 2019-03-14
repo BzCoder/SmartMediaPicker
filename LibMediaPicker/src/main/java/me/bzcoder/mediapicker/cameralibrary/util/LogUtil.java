@@ -2,7 +2,8 @@ package me.bzcoder.mediapicker.cameralibrary.util;
 
 import android.util.Log;
 
-import static com.cztv.compnent.commoncamera.BuildConfig.DEBUG;
+import static me.bzcoder.mediapicker.BuildConfig.DEBUG;
+
 
 /**
  * =====================================
@@ -17,7 +18,7 @@ public class LogUtil {
     private static final String DEFAULT_TAG = "CJT";
 
     public static void i(String tag, String msg) {
-//        if (DEBUG)
+       if (DEBUG)
             Log.i(tag, msg);
     }
 

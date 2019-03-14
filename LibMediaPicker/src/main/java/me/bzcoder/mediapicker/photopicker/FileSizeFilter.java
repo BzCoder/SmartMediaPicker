@@ -16,14 +16,18 @@
 package me.bzcoder.mediapicker.photopicker;
 
 import android.content.Context;
+import android.graphics.Point;
 
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.entity.Item;
+import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import me.bzcoder.mediapicker.R;
 
 /**
  * @author : BaoZhou
@@ -31,16 +35,16 @@ import java.util.Set;
  */
 public class FileSizeFilter extends Filter {
 
-    private int mMinWidth;
-    private int mMinHeight;
-    private int mMaxSize;
+    private int mMaxWidth;
+    private int mMaxHeight;
+    private int mMaxVideoSize;
     private int mMaxVideoLength;
     private int mMaxImageSize;
 
-    public FileSizeFilter(int minWidth, int minHeight, int maxVideoSizeInBytes, int maxImageSize, int maxVideoLength) {
-        mMinWidth = minWidth;
-        mMinHeight = minHeight;
-        mMaxSize = maxVideoSizeInBytes;
+    public FileSizeFilter(int maxWidth, int maxHeight, int maxVideoSizeInBytes, int maxImageSize, int maxVideoLength) {
+        mMaxWidth = maxWidth;
+        mMaxHeight = maxHeight;
+        mMaxVideoSize = maxVideoSizeInBytes;
         mMaxVideoLength = maxVideoLength;
         mMaxImageSize = maxImageSize;
     }
@@ -56,14 +60,24 @@ public class FileSizeFilter extends Filter {
     public IncapableCause filter(Context context, Item item) {
 //        if (!needFiltering(context, item))
 //            return null;
-        if (item.duration > mMaxVideoLength) {
-            return new IncapableCause(IncapableCause.DIALOG, "视频长度不要超过10秒");
+        if (item.duration > 0) {
+            if (item.duration > mMaxVideoLength) {
+                return new IncapableCause(IncapableCause.DIALOG, context.getString(R.string.error_video, mMaxVideoLength / 1000));
+            }
+            if (item.size > mMaxVideoSize) {
+                return new IncapableCause(IncapableCause.DIALOG,  context.getString(R.string.error_size,  mMaxVideoSize / Filter.K / Filter.K));
+            }
 
         } else if (item.duration == 0) {
-//            Point size = PhotoMetadataUtils.getBitmapBound(context.getContentResolver(), item.getContentUri());
+            Point size = PhotoMetadataUtils.getBitmapBound(context.getContentResolver(), item.getContentUri());
             if (item.size > mMaxImageSize) {
-                return new IncapableCause(IncapableCause.DIALOG, "文件大小不要超过" + mMaxImageSize / Filter.K / Filter.K + "M");
+                return new IncapableCause(IncapableCause.DIALOG,  context.getString(R.string.error_size,  mMaxImageSize / Filter.K / Filter.K));
             }
+            if (size.x > mMaxWidth || size.y > mMaxHeight || item.size > mMaxImageSize) {
+                return new IncapableCause(IncapableCause.DIALOG, context.getString(R.string.error_gif, mMaxWidth, mMaxHeight
+                        , String.valueOf(PhotoMetadataUtils.getSizeInMB(mMaxImageSize))));
+            }
+
         }
 
         return null;

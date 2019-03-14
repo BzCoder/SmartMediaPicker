@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">CommonCamera</string>
+    <string name="app_name">LibMediaPicker</string>
+
 
     <string name="permission_request_denied">需要相应的权限</string>
+    <string name="error_gif">长不大于 %1$dpx，宽不大于 %2$dpx， 且大小不超过 %3$sM。</string>
+    <string name="error_original">大小不超过 %1$sM。</string>
+    <string name="error_video">视频长度不超过%1$d秒。</string>
+    <string name="error_size">文件大小不要超过%1$dM。</string>
+
 </resources>

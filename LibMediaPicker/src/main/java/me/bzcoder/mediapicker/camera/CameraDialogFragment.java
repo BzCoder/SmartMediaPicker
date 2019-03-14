@@ -15,7 +15,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.cztv.compnent.commoncamera.R;
+import me.bzcoder.mediapicker.R;
+import me.bzcoder.mediapicker.config.MediaPickerConfig;
 import me.bzcoder.mediapicker.photopicker.PhotoPickUtils;
 
 
@@ -30,19 +31,7 @@ public class CameraDialogFragment extends DialogFragment {
     private ImageView ivTakePhoto;
     private ImageView ivPickPhoto;
     private ImageView ivCancel;
-
-    public int mButtonState;
-
-    public void setMaxImageSelectable(int maxImageSelectable) {
-        this.maxImageSelectable = maxImageSelectable;
-    }
-
-    public void setMaxVideoSelectable(int maxVideoSelectable) {
-        this.maxVideoSelectable = maxVideoSelectable;
-    }
-
-    private int maxImageSelectable = 9;
-    private int maxVideoSelectable = 1;
+    private MediaPickerConfig config;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,25 +86,31 @@ public class CameraDialogFragment extends DialogFragment {
         ivTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CameraUtils.startCamera(CameraDialogFragment.this.getActivity(), CameraDialogFragment.this.getContext(), mButtonState);
-                CameraDialogFragment.this.dismiss();
+                CameraUtils.startCamera(getActivity(), getContext(), config.getCameraMediaType(), config.getMaxVideoLength());
+                dismiss();
             }
         });
         ivPickPhoto = view.findViewById(R.id.iv_pick_photo);
         ivPickPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PhotoPickUtils.getAllSelector(CameraDialogFragment.this.getActivity(), maxImageSelectable, maxVideoSelectable);
-                CameraDialogFragment.this.dismiss();
+                PhotoPickUtils.getAllSelector(getActivity(), config);
+                dismiss();
             }
         });
         ivCancel = view.findViewById(R.id.iv_cancel);
         ivCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CameraDialogFragment.this.dismiss();
+                dismiss();
             }
         });
     }
+
+
+    public void setConfig(MediaPickerConfig config) {
+        this.config = config;
+    }
+
 
 }

@@ -8,9 +8,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
 /**
- * Created by 天上白玉京 on 2017/10/10.
+ * 
+ * @author : BaoZhou
+ * @date : 2019/3/15 0:14
  */
-
 public class PermissionUtils {
     public static final int MY_PERMISSIONS_REQUEST_CODE=10001;
 

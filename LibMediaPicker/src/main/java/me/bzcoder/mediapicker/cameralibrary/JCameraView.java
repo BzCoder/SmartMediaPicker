@@ -22,7 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
-import com.cztv.compnent.commoncamera.R;
+import me.bzcoder.mediapicker.R;
 import me.bzcoder.mediapicker.cameralibrary.listener.CaptureListener;
 import me.bzcoder.mediapicker.cameralibrary.listener.ClickListener;
 import me.bzcoder.mediapicker.cameralibrary.listener.ErrorListener;
@@ -51,6 +51,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
 
     //Camera状态机
     private CameraMachine machine;
+
 
     //闪关灯状态
     private static final int TYPE_FLASH_AUTO = 0x021;
@@ -107,7 +108,11 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     private int iconSrc = 0;        //图标资源
     private int iconLeft = 0;       //左图标
     private int iconRight = 0;      //右图标
-    private int duration = 0;       //录制时间
+    private int duration = 10 * 1000;       //录制时间
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     //缩放梯度
     private int zoomGradient = 0;
@@ -135,7 +140,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         iconSrc = a.getResourceId(R.styleable.JCameraView_iconSrc, R.drawable.ic_camera);
         iconLeft = a.getResourceId(R.styleable.JCameraView_iconLeft, 0);
         iconRight = a.getResourceId(R.styleable.JCameraView_iconRight, 0);
-        duration = a.getInteger(R.styleable.JCameraView_duration_max, 10 * 1000);       //没设置默认为10s
+//        duration = a.getInteger(R.styleable.JCameraView_duration_max, 10 * 1000);       //没设置默认为10s
         a.recycle();
         initData();
         initView();

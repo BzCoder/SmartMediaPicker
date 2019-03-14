@@ -11,8 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import me.bzcoder.mediapicker.cameralibrary.JCameraView;
-
-import static me.bzcoder.mediapicker.camera.Constant.BUTTON_STATE;
+import me.bzcoder.mediapicker.config.Constant;
 
 /**
  * 拍照相机工具类
@@ -26,14 +25,14 @@ public class CameraUtils {
     private static Context mContext;
     private static Activity mActivity;
     private static int buttonState = JCameraView.BUTTON_STATE_BOTH;
-    public static void startCamera(Activity activity, Context context) {
-        startCamera(activity, context,JCameraView.BUTTON_STATE_BOTH);
-    }
+    private static  int mDuration;
 
-    public static void startCamera(Activity activity, Context context, int state) {
+
+    public static void startCamera(Activity activity, Context context, int state,int duration) {
         mActivity = activity;
         mContext = context;
         buttonState = state;
+        mDuration = duration;
         getPermissions();
     }
 
@@ -65,8 +64,9 @@ public class CameraUtils {
     private static void startActivity(Activity activity) {
         Intent intent = new Intent();
         intent.setClass(activity, CameraActivity.class);
-        intent.putExtra(BUTTON_STATE, buttonState);
-        activity.startActivityForResult(intent,Constant.CAMERA_RESULT_CODE);
+        intent.putExtra(Constant.BUTTON_STATE, buttonState);
+        intent.putExtra(Constant.DURATION,mDuration );
+        activity.startActivityForResult(intent, Constant.CAMERA_RESULT_CODE);
     }
 
 

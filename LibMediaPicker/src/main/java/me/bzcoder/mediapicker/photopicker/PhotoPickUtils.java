@@ -3,16 +3,13 @@ package me.bzcoder.mediapicker.photopicker;
 import android.app.Activity;
 import android.widget.Toast;
 
-import com.cztv.compnent.commoncamera.R;
+import me.bzcoder.mediapicker.R;
+import me.bzcoder.mediapicker.config.Constant;
+import me.bzcoder.mediapicker.config.MediaPickerConfig;
 import me.bzcoder.mediapicker.glide.Glide4Engine;
+
 import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.filter.Filter;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static me.bzcoder.mediapicker.camera.Constant.REQUEST_CODE_CHOOSE;
 
 
 /**
@@ -22,24 +19,20 @@ import static me.bzcoder.mediapicker.camera.Constant.REQUEST_CODE_CHOOSE;
  * @date : 2018/7/12 10:02
  */
 public class PhotoPickUtils {
-
-    public static final List<String> IMAGE_TYPE = Arrays.asList("jpg", "png", "gif", "bmp", "webp", "jpeg");
-    public static final List<String> VIDEO_TYPE = Arrays.asList("mov", "mp4", "3gp", "mpg", "avi", "rmvb");
-
-
-    static public void getAllSelector(Activity activity, int maxImageSelectable, int maxVideoSelectable) {
+    static public void getAllSelector(Activity activity, MediaPickerConfig config) {
         boolean b = PermissionUtils.checkCameraPermission(activity);
         if (b) {
             Matisse.from(activity)
-                    .choose(maxVideoSelectable == 0 ? MimeType.ofImage() : MimeType.ofAll())
+                    .choose(config.getPhotoPickerMediaType())
                     .theme(R.style.Matisse_Zhihu)
-                    .countable(false)
-                    .addFilter(new FileSizeFilter(320, 320, 10 * Filter.K * Filter.K, 5 * Filter.K * Filter.K, VideoConst.VIDEO_LENGTH))
-                    .maxSelectablePerMediaType(maxImageSelectable, 1)
-                    .originalEnable(false)
-                    .maxOriginalSize(10)
+                    .countable(config.isCountable())
+                    .addFilter(new FileSizeFilter(config.getMaxWidth(), config.getMaxHeight(), config.getMaxVideoSize() * Filter.K * Filter.K, config.getMaxImageSize() * Filter.K * Filter.K, config.getMaxVideoLength()))
+                    .maxSelectablePerMediaType(config.getMaxImageSelectable()==0?1:config.getMaxImageSelectable()
+                            , config.getMaxVideoSelectable()==0?1:config.getMaxVideoSelectable())
+                    .originalEnable(config.isOriginalEnable())
+                    .maxOriginalSize(config.getMaxOriginalSize())
                     .imageEngine(new Glide4Engine())
-                    .forResult(REQUEST_CODE_CHOOSE);
+                    .forResult(Constant.REQUEST_CODE_CHOOSE);
         } else {
             Toast.makeText(activity, R.string.permission_request_denied, Toast.LENGTH_LONG)
                     .show();

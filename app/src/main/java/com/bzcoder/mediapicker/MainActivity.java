@@ -56,8 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        List<String> resultData = new ArrayList<>();
-        resultData.addAll(CameraDialogUtil.getResultData(this, requestCode, resultCode, data));
-        tv_path.setText(Arrays.toString(resultData.toArray()));
+        List<String> resultData = CameraDialogUtil.getResultData(this, requestCode, resultCode, data);
+        if(resultData!=null){
+            tv_path.setText(Arrays.toString(resultData.toArray()));
+        }
     }
 }

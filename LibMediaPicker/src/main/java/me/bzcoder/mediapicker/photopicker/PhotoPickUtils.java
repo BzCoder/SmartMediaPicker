@@ -2,6 +2,7 @@ package me.bzcoder.mediapicker.photopicker;
 
 import android.Manifest;
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import io.reactivex.Observer;
@@ -23,8 +24,8 @@ import com.zhihu.matisse.filter.Filter;
  * @date : 2018/7/12 10:02
  */
 public class PhotoPickUtils {
-    static public void getAllSelector(final Activity activity, final MediaPickerConfig config) {
-        RxPermissions rxPermissions = new RxPermissions(activity);
+    static public void getAllSelector(final Fragment fragment, final MediaPickerConfig config) {
+        RxPermissions rxPermissions = new RxPermissions(fragment);
         rxPermissions.request(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
             @Override
@@ -33,7 +34,7 @@ public class PhotoPickUtils {
             }
             @Override
             public void onNext(Boolean aBoolean) {
-                Matisse.from(activity)
+                Matisse.from(fragment)
                         .choose(config.getPhotoPickerMediaType())
                         .theme(R.style.Matisse_Zhihu)
                         .countable(config.isCountable())
@@ -48,7 +49,7 @@ public class PhotoPickUtils {
 
             @Override
             public void onError(Throwable e) {
-                Toast.makeText(activity, R.string.permission_request_denied, Toast.LENGTH_LONG)
+                Toast.makeText(fragment.getContext(), R.string.permission_request_denied, Toast.LENGTH_LONG)
                         .show();
             }
 

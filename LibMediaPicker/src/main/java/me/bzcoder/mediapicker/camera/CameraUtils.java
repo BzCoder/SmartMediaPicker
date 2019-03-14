@@ -5,9 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -27,19 +25,18 @@ public class CameraUtils {
     //权限申请自定义码
     private static final int GET_PERMISSION_REQUEST = 100;
     private static Context mContext;
-    private static Activity mActivity;
+    private static Fragment mFragment;
     private static int buttonState = JCameraView.BUTTON_STATE_BOTH;
     private static int mDuration;
 
 
-    public static void startCamera(final Activity activity, Context context, int state, int duration) {
-        mActivity = activity;
+    public static void startCamera(final Fragment fragment, Context context, int state, int duration) {
+        mFragment = fragment;
         mContext = context;
         buttonState = state;
         mDuration = duration;
 
-        RxPermissions rxPermissions = new RxPermissions(activity);
-
+        RxPermissions rxPermissions = new RxPermissions(fragment);
         rxPermissions.request(
                 Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.CAMERA,
@@ -53,7 +50,7 @@ public class CameraUtils {
             @Override
             public void onNext(Boolean aBoolean) {
                 if (aBoolean){
-                    startActivity(activity);
+                    startActivity(fragment.getActivity());
                 }
             }
 
@@ -105,7 +102,7 @@ public class CameraUtils {
                     size++;
                 }
                 if (size == 0) {
-                    startActivity(mActivity);
+                    startActivity(mFragment.getActivity());
                 } else {
                     Toast.makeText(mContext, "请到设置-权限管理中开启", Toast.LENGTH_SHORT).show();
                 }

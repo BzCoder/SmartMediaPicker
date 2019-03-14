@@ -1,4 +1,4 @@
-# MediaPicker
+# MediaPicker 多媒体选择器 
 [![](https://jitpack.io/v/BzCoder/MediaPicker.svg)](https://jitpack.io/#BzCoder/MediaPicker)
 
 一款方便好用的多媒体选择器。封装了以下两个库。

@@ -10,6 +10,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import me.bzcoder.mediapicker.cameralibrary.JCameraView;
 import me.bzcoder.mediapicker.config.Constant;
 
@@ -25,47 +29,54 @@ public class CameraUtils {
     private static Context mContext;
     private static Activity mActivity;
     private static int buttonState = JCameraView.BUTTON_STATE_BOTH;
-    private static  int mDuration;
+    private static int mDuration;
 
 
-    public static void startCamera(Activity activity, Context context, int state,int duration) {
+    public static void startCamera(final Activity activity, Context context, int state, int duration) {
         mActivity = activity;
         mContext = context;
         buttonState = state;
         mDuration = duration;
-        getPermissions();
+
+        RxPermissions rxPermissions = new RxPermissions(activity);
+
+        rxPermissions.request(
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                if (aBoolean){
+                    startActivity(activity);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Toast.makeText(mContext, "请确认开启录音，相机，读写存储权限", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
     }
 
-    /**
-     * 获取权限
-     */
-    private static void getPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager
-                    .PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) == PackageManager
-                            .PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA) == PackageManager
-                            .PERMISSION_GRANTED) {
-                startActivity(mActivity);
-            } else {
-                Toast.makeText(mContext, "请确认开启录音，相机，读写存储权限", Toast.LENGTH_SHORT).show();
-                //不具有获取权限，需要进行权限申请
-                ActivityCompat.requestPermissions((Activity) mContext, new String[]{
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.RECORD_AUDIO,
-                        Manifest.permission.CAMERA}, GET_PERMISSION_REQUEST);
-            }
-        } else {
-            startActivity(mActivity);
-        }
-    }
 
     private static void startActivity(Activity activity) {
         Intent intent = new Intent();
         intent.setClass(activity, CameraActivity.class);
         intent.putExtra(Constant.BUTTON_STATE, buttonState);
-        intent.putExtra(Constant.DURATION,mDuration );
+        intent.putExtra(Constant.DURATION, mDuration);
         activity.startActivityForResult(intent, Constant.CAMERA_RESULT_CODE);
     }
 

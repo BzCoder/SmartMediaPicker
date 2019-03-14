@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.zhihu.matisse.Matisse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.bzcoder.mediapicker.config.Constant;
@@ -49,7 +50,7 @@ public class CameraDialogUtil {
     }
 
     public static List<String> getResultData(Context context, int requestCode, int resultCode, @Nullable Intent data) {
-        List<String> result = null;
+        List<String> result = new ArrayList<>();
         if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_CODE_CHOOSE) {
             result = Matisse.obtainPathResult(data);
         } else if (resultCode == Constant.CAMERA_RESULT_CODE) {

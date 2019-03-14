@@ -25,7 +25,7 @@ gradle添加：
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:MediaPicker:1.0.0'
+	        implementation 'com.github.BzCoder:MediaPicker:1.0.1'
 	}
 ```
 代码添加：

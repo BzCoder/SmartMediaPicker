@@ -34,7 +34,7 @@ public class PhotoPickUtils {
             }
             @Override
             public void onNext(Boolean aBoolean) {
-                Matisse.from(fragment)
+                Matisse.from(fragment.getActivity())
                         .choose(config.getPhotoPickerMediaType())
                         .theme(R.style.Matisse_Zhihu)
                         .countable(config.isCountable())

@@ -21,13 +21,13 @@ import static android.app.Activity.RESULT_OK;
  * @author : BaoZhou
  * @date : 2019/3/14 21:38
  */
-public class CameraDialogUtil {
-    private volatile static CameraDialogUtil instance;
+public class SmartMediaPicker {
+    private volatile static SmartMediaPicker instance;
     private volatile static CameraDialogFragment cameraDialogFragment;
     private FragmentManager manager;
     private MediaPickerConfig config;
 
-    private CameraDialogUtil() {
+    private SmartMediaPicker() {
         if (cameraDialogFragment == null) {
             cameraDialogFragment = new CameraDialogFragment();
         }
@@ -38,11 +38,11 @@ public class CameraDialogUtil {
         cameraDialogFragment.show(manager, "cameraDialogFragment");
     }
 
-    public static CameraDialogUtil getInstance() {
+    public static SmartMediaPicker getInstance() {
         if (instance == null) {
-            synchronized (CameraDialogUtil.class) {
+            synchronized (SmartMediaPicker.class) {
                 if (instance == null) {
-                    instance = new CameraDialogUtil();
+                    instance = new SmartMediaPicker();
                 }
             }
         }
@@ -155,8 +155,8 @@ public class CameraDialogUtil {
             return this;
         }
 
-        public CameraDialogUtil build() {
-            CameraDialogUtil cameraDialogUtil = CameraDialogUtil.getInstance();
+        public SmartMediaPicker build() {
+            SmartMediaPicker cameraDialogUtil = SmartMediaPicker.getInstance();
             MediaPickerConfig config = new MediaPickerConfig();
             cameraDialogUtil.manager = manager;
             config.setCountable(countable);

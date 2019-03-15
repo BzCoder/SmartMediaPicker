@@ -25,28 +25,35 @@ gradle添加：
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:MediaPicker:1.0.1'
+	        implementation 'com.github.BzCoder:MediaPicker:1.0.5'
 	}
 ```
 代码添加：
 ```java
-CameraDialogUtil.builder(getSupportFragmentManager())
+  SmartMediaPicker.builder(getSupportFragmentManager())
+                        //最大图片选择数目
                         .withMaxImageSelectable(5)
+                        //最大视频选择数目
                         .withMaxVideoSelectable(1)
+                        //图片选择器是否显示数字
                         .withCountable(true)
+                        //最大视频长度
                         .withMaxVideoLength(15 * 1000)
+                        //最大视频文件大小 单位MB
                         .withMaxVideoSize(1)
-                        .withMaxHeight(100)
+                        //最大图片高度 默认1920
+                        .withMaxHeight(1920)
+                        //最大图片宽度 默认1920
+                        .withMaxWidth(1920)
+                        //最大图片大小 单位MB
                         .withMaxImageSize(5)
-                        .withMaxWidth(50)
                         .build()
                         .show();
 ```
 
-获取资源：
+获取选择的资源：
 
 ```java
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        List<String> resultData = new ArrayList<>();
-        resultData.addAll(CameraDialogUtil.getResultData(this, requestCode, resultCode, data));
+        List<String> resultData = SmartMediaPicker.getResultData(this, requestCode, resultCode, data);
 ```

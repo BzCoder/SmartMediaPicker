@@ -23,7 +23,6 @@ import me.bzcoder.mediapicker.config.Constant;
  */
 public class CameraUtils {
     //权限申请自定义码
-    private static final int GET_PERMISSION_REQUEST = 100;
     private static Context mContext;
     private static Fragment mFragment;
     private static int buttonState = JCameraView.BUTTON_STATE_BOTH;
@@ -36,7 +35,7 @@ public class CameraUtils {
         buttonState = state;
         mDuration = duration;
 
-        RxPermissions rxPermissions = new RxPermissions(fragment);
+        RxPermissions rxPermissions = new RxPermissions(mFragment);
         rxPermissions.request(
                 Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.CAMERA,
@@ -77,36 +76,4 @@ public class CameraUtils {
         activity.startActivityForResult(intent, Constant.CAMERA_RESULT_CODE);
     }
 
-
-    public static void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        if (requestCode == GET_PERMISSION_REQUEST) {
-            int size = 0;
-            if (grantResults.length >= 1) {
-                int writeResult = grantResults[0];
-                //读写内存权限
-                boolean writeGranted = writeResult == PackageManager.PERMISSION_GRANTED;//读写内存权限
-                if (!writeGranted) {
-                    size++;
-                }
-                //录音权限
-                int recordPermissionResult = grantResults[1];
-                boolean recordPermissionGranted = recordPermissionResult == PackageManager.PERMISSION_GRANTED;
-                if (!recordPermissionGranted) {
-                    size++;
-                }
-                //相机权限
-                int cameraPermissionResult = grantResults[2];
-                boolean cameraPermissionGranted = cameraPermissionResult == PackageManager.PERMISSION_GRANTED;
-                if (!cameraPermissionGranted) {
-                    size++;
-                }
-                if (size == 0) {
-                    startActivity(mFragment.getActivity());
-                } else {
-                    Toast.makeText(mContext, "请到设置-权限管理中开启", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
 }

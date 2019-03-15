@@ -32,19 +32,22 @@ public class PhotoPickUtils {
             public void onSubscribe(Disposable d) {
 
             }
+
             @Override
             public void onNext(Boolean aBoolean) {
-                Matisse.from(fragment.getActivity())
-                        .choose(config.getPhotoPickerMediaType())
-                        .theme(R.style.Matisse_Zhihu)
-                        .countable(config.isCountable())
-                        .addFilter(new FileSizeFilter(config.getMaxWidth(), config.getMaxHeight(), config.getMaxVideoSize() * Filter.K * Filter.K, config.getMaxImageSize() * Filter.K * Filter.K, config.getMaxVideoLength()))
-                        .maxSelectablePerMediaType(config.getMaxImageSelectable()==0?1:config.getMaxImageSelectable()
-                                , config.getMaxVideoSelectable()==0?1:config.getMaxVideoSelectable())
-                        .originalEnable(config.isOriginalEnable())
-                        .maxOriginalSize(config.getMaxOriginalSize())
-                        .imageEngine(new Glide4Engine())
-                        .forResult(Constant.REQUEST_CODE_CHOOSE);
+                if (aBoolean) {
+                    Matisse.from(fragment.getActivity())
+                            .choose(config.getPhotoPickerMediaType())
+                            .theme(R.style.Matisse_Zhihu)
+                            .countable(config.isCountable())
+                            .addFilter(new FileSizeFilter(config.getMaxWidth(), config.getMaxHeight(), config.getMaxVideoSize() * Filter.K * Filter.K, config.getMaxImageSize() * Filter.K * Filter.K, config.getMaxVideoLength()))
+                            .maxSelectablePerMediaType(config.getMaxImageSelectable() == 0 ? 1 : config.getMaxImageSelectable()
+                                    , config.getMaxVideoSelectable() == 0 ? 1 : config.getMaxVideoSelectable())
+                            .originalEnable(config.isOriginalEnable())
+                            .maxOriginalSize(config.getMaxOriginalSize())
+                            .imageEngine(new Glide4Engine())
+                            .forResult(Constant.REQUEST_CODE_CHOOSE);
+                }
             }
 
             @Override
@@ -58,11 +61,6 @@ public class PhotoPickUtils {
 
             }
         });
-
-
-
-
-
 
 
     }

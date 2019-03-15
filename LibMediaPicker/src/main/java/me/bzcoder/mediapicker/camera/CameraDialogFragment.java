@@ -78,7 +78,6 @@ public class CameraDialogFragment extends DialogFragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        CameraUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void initView(View view) {

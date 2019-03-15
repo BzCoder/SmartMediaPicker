@@ -2,7 +2,7 @@
 [![](https://jitpack.io/v/BzCoder/SmartMediaPicker.svg)](https://jitpack.io/#BzCoder/SmartMediaPicker)
 
 一款方便好用的仿微信多媒体选择器，集合和图片选择，拍照，拍摄短视频功能。封装了以下两个库。
-- [知乎matisse](https://github.com/CJT2325/CameraView)
+- [知乎matisse](https://github.com/zhihu/Matisse)
 - [仿微信拍照Android控件](https://github.com/CJT2325/CameraView)
 ## 演示
 

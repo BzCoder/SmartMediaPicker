@@ -1,5 +1,5 @@
 # MediaPicker 多媒体选择器 
-[![](https://jitpack.io/v/BzCoder/MediaPicker.svg)](https://jitpack.io/#BzCoder/MediaPicker)
+[![](https://jitpack.io/v/BzCoder/SmartMediaPicker.svg)](https://jitpack.io/#BzCoder/SmartMediaPicker)
 
 一款方便好用的多媒体选择器。封装了以下两个库。
 - [知乎matisse](https://github.com/CJT2325/CameraView)
@@ -25,7 +25,7 @@ gradle添加：
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:MediaPicker:1.0.5'
+	        implementation 'com.github.BzCoder:SmartMediaPicker:1.0.5'
 	}
 ```
 代码添加：

@@ -23,7 +23,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class SmartMediaPicker {
     private volatile static SmartMediaPicker instance;
-    private volatile static CameraDialogFragment cameraDialogFragment;
+    private CameraDialogFragment cameraDialogFragment;
     private FragmentManager manager;
     private MediaPickerConfig config;
 

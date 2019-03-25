@@ -15,8 +15,14 @@
             android:screenOrientation="portrait" />
 
         <!--知乎图片选择器-->
-        <activity android:name="com.zhihu.matisse.ui.MatisseActivity" />
-        <activity android:name="com.zhihu.matisse.internal.ui.AlbumPreviewActivity" />
-        <activity android:name="com.zhihu.matisse.internal.ui.SelectedPreviewActivity" />
+        <activity
+            android:name="com.zhihu.matisse.ui.MatisseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zhihu.matisse.internal.ui.AlbumPreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zhihu.matisse.internal.ui.SelectedPreviewActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

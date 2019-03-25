@@ -1,24 +1,46 @@
 package me.bzcoder.mediapicker.config;
 
 import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.ImageEngine;
 
 import java.util.Set;
 
 import me.bzcoder.mediapicker.cameralibrary.JCameraView;
 
 public class MediaPickerConfig {
+    /**
+     * 选择是否显示数字
+     */
     private boolean countable;
+    /**
+     * 是否可以选择原图
+     */
     private boolean originalEnable;
+    /**
+     * 最大原图大小 单位MB
+     */
     private int maxOriginalSize;
+    /**
+     * 最大图片可选择的数目
+     */
     private int maxImageSelectable;
+    /**
+     * 最大视频可选择的数目
+     */
     private int maxVideoSelectable;
+    /**
+     * 最大图片宽度
+     */
     private int maxWidth;
+    /**
+     * 最大图片高度
+     */
     private int maxHeight;
 
     /**
      * 单位：MB , 默认15MB
      */
-    private int maxImageSize ;
+    private int maxImageSize;
 
     /**
      * 单位：毫秒 ,默认20秒
@@ -28,6 +50,8 @@ public class MediaPickerConfig {
      * 单位：MB
      */
     private int maxVideoSize;
+
+    private ImageEngine imageEngine;
 
     public MediaPickerConfig() {
 
@@ -131,4 +155,14 @@ public class MediaPickerConfig {
         }
         return MimeType.ofAll();
     }
+
+
+    public ImageEngine getImageEngine() {
+        return imageEngine;
+    }
+
+    public void setImageEngine(ImageEngine imageEngine) {
+        this.imageEngine = imageEngine;
+    }
+
 }

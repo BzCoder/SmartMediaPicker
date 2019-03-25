@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .withMaxWidth(1920)
                         //最大图片大小 单位MB
                         .withMaxImageSize(5)
+                        //设置图片加载引擎
+                        .withImageEngine(new Glide4Engine())
                         .build()
                         .show();
                 break;
@@ -64,10 +67,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         List<String> resultData = SmartMediaPicker.getResultData(this, requestCode, resultCode, data);
-        if(resultData!=null && resultData.size()>0){
-            tv_path.setText(Arrays.toString(resultData.toArray()));
-        }
-        else{
+        if (resultData != null && resultData.size() > 0) {
+            tv_path.setText(Arrays.toString(resultData.toArray()) + "\n文件类型："
+                    + SmartMediaPicker.getFileType(resultData.get(0)) + "\n视频时长" +
+                    (SmartMediaPicker.getFileType(resultData.get(0)).contains("video") ?
+                            SmartMediaPicker.getVideoDuration(resultData.get(0)) : ""));
+
+        } else {
             tv_path.setText("NO DATA");
         }
     }

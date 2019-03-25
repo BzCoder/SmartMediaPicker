@@ -12,7 +12,5 @@ public interface Constant {
 
     String BUTTON_STATE = "BUTTON_STATE";
 
-
-
     String DURATION = "DURATION";
 }

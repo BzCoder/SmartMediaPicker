@@ -52,14 +52,11 @@ public class FileSizeFilter extends Filter {
     @Override
     public Set<MimeType> constraintTypes() {
         return new HashSet<MimeType>() {{
-            add(MimeType.GIF);
         }};
     }
 
     @Override
     public IncapableCause filter(Context context, Item item) {
-//        if (!needFiltering(context, item))
-//            return null;
         if (item.duration > 0) {
             if (item.duration > mMaxVideoLength) {
                 return new IncapableCause(IncapableCause.DIALOG, context.getString(R.string.error_video, mMaxVideoLength / 1000));

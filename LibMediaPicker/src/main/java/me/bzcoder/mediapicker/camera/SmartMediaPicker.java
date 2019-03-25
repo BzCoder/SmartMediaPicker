@@ -2,11 +2,15 @@ package me.bzcoder.mediapicker.camera;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.engine.ImageEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +53,38 @@ public class SmartMediaPicker {
         return instance;
     }
 
+    /**
+     * 根据路径得到视频缩略图
+     *
+     * @param videoPath
+     * @return
+     */
+    public static Bitmap getVideoPhoto(String videoPath) {
+        MediaMetadataRetriever media = new MediaMetadataRetriever();
+        media.setDataSource(videoPath);
+        Bitmap bitmap = media.getFrameAtTime();
+        return bitmap;
+    }
+
+    /**
+     * 获取视频总时长
+     *
+     * @param path
+     * @return
+     */
+    public static int getVideoDuration(String path) {
+        MediaMetadataRetriever media = new MediaMetadataRetriever();
+        media.setDataSource(path);
+        String duration = media.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        return Integer.parseInt(duration);
+    }
+
+
+    public static String getFileType(String url) {
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+    }
+
     public static List<String> getResultData(Context context, int requestCode, int resultCode, @Nullable Intent data) {
         List<String> result = new ArrayList<>();
         if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_CODE_CHOOSE) {
@@ -86,6 +122,7 @@ public class SmartMediaPicker {
         private int maxImageSize;
         private int maxVideoLength;
         private int maxVideoSize;
+        private ImageEngine imageEngine;
 
         private Builder(FragmentManager manager) {
             this.manager = manager;
@@ -155,6 +192,12 @@ public class SmartMediaPicker {
             return this;
         }
 
+        public Builder withImageEngine(ImageEngine imageEngine) {
+            this.imageEngine = imageEngine;
+            return this;
+        }
+
+
         public SmartMediaPicker build() {
             SmartMediaPicker cameraDialogUtil = SmartMediaPicker.getInstance();
             MediaPickerConfig config = new MediaPickerConfig();
@@ -169,6 +212,7 @@ public class SmartMediaPicker {
             config.setMaxImageSize(maxImageSize);
             config.setMaxVideoLength(maxVideoLength);
             config.setMaxVideoSize(maxVideoSize);
+            config.setImageEngine(imageEngine);
             cameraDialogUtil.setConfig(config);
             return cameraDialogUtil;
         }

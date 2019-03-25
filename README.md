@@ -51,21 +51,19 @@ gradle添加：
                         .withImageEngine(new Glide4Engine())
                         .build()
                         .show();
-			
-			
 ```
+实用工具类：
+- SmartMediaPicker.getFileType(String url) ：获取文件类型
+- SmartMediaPicker.getVideoDuration(String path)：获取视频时长
+- SmartMediaPicker.getVideoPhoto(SString path)：获取视频缩略图
 
-获取选择的资源以及一些方便的小工具：
+获取选择的资源：
 
 ```java
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         List<String> resultData = SmartMediaPicker.getResultData(this, requestCode, resultCode, data);
         if (resultData != null && resultData.size() > 0) {
-            tv_path.setText(Arrays.toString(resultData.toArray()) + "\n文件类型："
-                    + SmartMediaPicker.getFileType(resultData.get(0)) + "\n视频时长" +
-                    (SmartMediaPicker.getFileType(resultData.get(0)).contains("video") ?
-                            SmartMediaPicker.getVideoDuration(resultData.get(0)) : ""));
-
+            tv_path.setText(Arrays.toString(resultData.toArray()));
         } else {
             tv_path.setText("NO DATA");
         }

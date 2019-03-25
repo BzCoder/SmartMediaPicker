@@ -32,7 +32,7 @@
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:SmartMediaPicker:1.0.6'
+	        implementation 'com.github.BzCoder:SmartMediaPicker:1.0.7'
 	}
 ```
 ### 代码添加：

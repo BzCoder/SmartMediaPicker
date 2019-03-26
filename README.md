@@ -11,6 +11,10 @@
 |![](image/20190315005039.gif) | ![](image/20190315005454.gif) |
 
 ## 改动
+- v1.0.8
+   - 新增单独调用相机，图片选择器功能
+   - SmartMediaPicker.builder()参数改为Fragment与FragmentActivity
+   - 修复文字提示BUG
 - v1.0.7
    - 添加实用工具类
    - 不再直接依赖Glide
@@ -37,27 +41,29 @@
 ```
 ### 代码添加：
 ```java
-  SmartMediaPicker.builder(getSupportFragmentManager())
-                        //最大图片选择数目
-                        .withMaxImageSelectable(5)
-                        //最大视频选择数目
-                        .withMaxVideoSelectable(1)
-                        //图片选择器是否显示数字
-                        .withCountable(true)
-                        //最大视频长度
-                        .withMaxVideoLength(15 * 1000)
-                        //最大视频文件大小 单位MB
-                        .withMaxVideoSize(1)
-                        //最大图片高度 默认1920
-                        .withMaxHeight(1920)
-                        //最大图片宽度 默认1920
-                        .withMaxWidth(1920)
-                        //最大图片大小 单位MB
-                        .withMaxImageSize(5)
-			 //设置图片加载引擎
-                        .withImageEngine(new Glide4Engine())
-                        .build()
-                        .show();
+        builder = SmartMediaPicker.builder(this)
+                //最大图片选择数目
+                .withMaxImageSelectable(5)
+                //最大视频选择数目
+                .withMaxVideoSelectable(1)
+                //图片选择器是否显示数字
+                .withCountable(true)
+                //最大视频长度
+                .withMaxVideoLength(15 * 1000)
+                //最大视频文件大小 单位MB
+                .withMaxVideoSize(1)
+                //最大图片高度 默认1920
+                .withMaxHeight(1920)
+                //最大图片宽度 默认1920
+                .withMaxWidth(1920)
+                //最大图片大小 单位MB
+                .withMaxImageSize(5)
+                //设置图片加载引擎
+                .withImageEngine(new Glide4Engine())
+                //弹出类别
+                .withMediaPickerType(MediaPickerEnum.BOTH)
+                .build()
+                .show();
 ```
 ### ImageEngine
 需要自己实现图片加载，图片加载类需要实现ImageEngine接口，当然也可以直接复制一下代码：

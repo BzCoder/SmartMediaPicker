@@ -12,9 +12,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.bzcoder.mediapicker.R;
-import me.bzcoder.mediapicker.camera.SmartMediaPicker;
+import me.bzcoder.mediapicker.SmartMediaPicker;
 import me.bzcoder.mediapicker.config.MediaPickerEnum;
 
+/**
+ * @author : BaoZhou
+ * @date : 2019/3/26 15:21
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvPath;
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .show();
                 break;
             case R.id.jump_activity:
-                Intent intent = new Intent(MainActivity.this,SampleFragmentActivity.class);
+                Intent intent = new Intent(MainActivity.this, SampleFragmentActivity.class);
                 startActivity(intent);
                 break;
             default:

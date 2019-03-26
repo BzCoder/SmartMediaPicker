@@ -87,7 +87,7 @@ public class CameraUtils {
             @Override
             public void onNext(Boolean aBoolean) {
                 if (aBoolean){
-                    startActivity(fragment.getActivity());
+                    startActivity(fragment);
                 }
             }
 
@@ -111,5 +111,14 @@ public class CameraUtils {
         intent.putExtra(Constant.DURATION, mDuration);
         activity.startActivityForResult(intent, Constant.CAMERA_RESULT_CODE);
     }
+
+    private static void startActivity(Fragment fragment) {
+        Intent intent = new Intent();
+        intent.setClass(fragment.getActivity(), CameraActivity.class);
+        intent.putExtra(Constant.BUTTON_STATE, buttonState);
+        intent.putExtra(Constant.DURATION, mDuration);
+        fragment.startActivityForResult(intent, Constant.CAMERA_RESULT_CODE);
+    }
+
 
 }

@@ -34,22 +34,7 @@ public class PhotoPickUtils {
 
             @Override
             public void onNext(Boolean aBoolean) {
-                if (aBoolean) {
-                    if (config.getImageEngine() == null)
-                        throw new IllegalArgumentException("ImageEngine cannot be null");
-
-                    Matisse.from(fragment.getActivity())
-                            .choose(config.getPhotoPickerMediaType())
-                            .theme(R.style.Matisse_Zhihu)
-                            .countable(config.isCountable())
-                            .addFilter(new FileSizeFilter(config.getMaxWidth(), config.getMaxHeight(), config.getMaxVideoSize() * Filter.K * Filter.K, config.getMaxImageSize() * Filter.K * Filter.K, config.getMaxVideoLength()))
-                            .maxSelectablePerMediaType(config.getMaxImageSelectable() == 0 ? 1 : config.getMaxImageSelectable()
-                                    , config.getMaxVideoSelectable() == 0 ? 1 : config.getMaxVideoSelectable())
-                            .originalEnable(config.isOriginalEnable())
-                            .maxOriginalSize(config.getMaxOriginalSize())
-                            .imageEngine(config.getImageEngine())
-                            .forResult(Constant.REQUEST_CODE_CHOOSE);
-                }
+                startMatisse(aBoolean, config, Matisse.from(fragment));
             }
 
             @Override
@@ -66,6 +51,8 @@ public class PhotoPickUtils {
 
 
     }
+
+
     static public void getAllSelector(final FragmentActivity fragmentActivity, final MediaPickerConfig config) {
         RxPermissions rxPermissions = new RxPermissions(fragmentActivity);
         rxPermissions.request(
@@ -77,21 +64,7 @@ public class PhotoPickUtils {
 
             @Override
             public void onNext(Boolean aBoolean) {
-                if (aBoolean) {
-                    if (config.getImageEngine() == null)
-                        throw new IllegalArgumentException("ImageEngine cannot be null");
-                    Matisse.from(fragmentActivity)
-                            .choose(config.getPhotoPickerMediaType())
-                            .theme(R.style.Matisse_Zhihu)
-                            .countable(config.isCountable())
-                            .addFilter(new FileSizeFilter(config.getMaxWidth(), config.getMaxHeight(), config.getMaxVideoSize() * Filter.K * Filter.K, config.getMaxImageSize() * Filter.K * Filter.K, config.getMaxVideoLength()))
-                            .maxSelectablePerMediaType(config.getMaxImageSelectable() == 0 ? 1 : config.getMaxImageSelectable()
-                                    , config.getMaxVideoSelectable() == 0 ? 1 : config.getMaxVideoSelectable())
-                            .originalEnable(config.isOriginalEnable())
-                            .maxOriginalSize(config.getMaxOriginalSize())
-                            .imageEngine(config.getImageEngine())
-                            .forResult(Constant.REQUEST_CODE_CHOOSE);
-                }
+                startMatisse(aBoolean, config, Matisse.from(fragmentActivity));
             }
 
             @Override
@@ -105,8 +78,22 @@ public class PhotoPickUtils {
 
             }
         });
-
-
+    }
+    private static void startMatisse(Boolean aBoolean, MediaPickerConfig config, Matisse matisse) {
+        if (aBoolean) {
+            if (config.getImageEngine() == null)
+                throw new IllegalArgumentException("ImageEngine cannot be null");
+            matisse.choose(config.getPhotoPickerMediaType())
+                    .theme(R.style.Matisse_Zhihu)
+                    .countable(config.isCountable())
+                    .addFilter(new FileSizeFilter(config.getMaxWidth(), config.getMaxHeight(), config.getMaxVideoSize() * Filter.K * Filter.K, config.getMaxImageSize() * Filter.K * Filter.K, config.getMaxVideoLength()))
+                    .maxSelectablePerMediaType(config.getMaxImageSelectable() == 0 ? 1 : config.getMaxImageSelectable()
+                            , config.getMaxVideoSelectable() == 0 ? 1 : config.getMaxVideoSelectable())
+                    .originalEnable(config.isOriginalEnable())
+                    .maxOriginalSize(config.getMaxOriginalSize())
+                    .imageEngine(config.getImageEngine())
+                    .forResult(Constant.REQUEST_CODE_CHOOSE);
+        }
     }
 
 }

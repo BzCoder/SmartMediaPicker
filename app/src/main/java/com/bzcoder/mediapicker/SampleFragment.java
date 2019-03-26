@@ -1,5 +1,6 @@
 package com.bzcoder.mediapicker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,10 +11,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.List;
+
 import me.bzcoder.mediapicker.R;
-import me.bzcoder.mediapicker.camera.SmartMediaPicker;
+import me.bzcoder.mediapicker.SmartMediaPicker;
 import me.bzcoder.mediapicker.config.MediaPickerEnum;
 
+
+/**
+ *
+ * @author : BaoZhou
+ * @date : 2019/3/26 15:20
+ */
 public class SampleFragment extends Fragment implements View.OnClickListener {
     private TextView tvPath;
     private Button btnPath;
@@ -91,6 +101,21 @@ public class SampleFragment extends Fragment implements View.OnClickListener {
             default:
                 break;
 
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<String> resultData = SmartMediaPicker.getResultData(getContext(), requestCode, resultCode, data);
+        if (resultData != null && resultData.size() > 0) {
+            tvPath.setText(Arrays.toString(resultData.toArray()) + "\n文件类型："
+                    + SmartMediaPicker.getFileType(resultData.get(0)) + "\n视频时长: " +
+                    (SmartMediaPicker.getFileType(resultData.get(0)).contains("video") ?
+                            SmartMediaPicker.getVideoDuration(resultData.get(0)) : ""));
+
+        } else {
+            tvPath.setText("NO DATA");
         }
     }
 }

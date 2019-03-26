@@ -95,7 +95,7 @@ public class CameraActivity extends AppCompatActivity {
                 paths.add(path);
                 Intent intent = new Intent();
                 intent.putExtra(Constant.CAMERA_PATH, paths);
-                setResult(Constant.CAMERA_RESULT_CODE, intent);
+                setResult(RESULT_OK, intent);
                 finishActivityWithAnim();
             }
 
@@ -106,7 +106,7 @@ public class CameraActivity extends AppCompatActivity {
                 paths.add(url);
                 Intent intent = new Intent();
                 intent.putExtra(Constant.CAMERA_PATH, paths);
-                setResult(Constant.CAMERA_RESULT_CODE, intent);
+                setResult(RESULT_OK, intent);
                 finishActivityWithAnim();
             }
 

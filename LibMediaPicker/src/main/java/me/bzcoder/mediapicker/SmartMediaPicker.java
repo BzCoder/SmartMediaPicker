@@ -1,4 +1,4 @@
-package me.bzcoder.mediapicker.camera;
+package me.bzcoder.mediapicker;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import com.zhihu.matisse.engine.ImageEngine;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.bzcoder.mediapicker.camera.CameraDialogFragment;
+import me.bzcoder.mediapicker.camera.CameraUtils;
 import me.bzcoder.mediapicker.config.Constant;
 import me.bzcoder.mediapicker.config.MediaPickerConfig;
 import me.bzcoder.mediapicker.config.MediaPickerEnum;
@@ -116,10 +118,12 @@ public class SmartMediaPicker {
 
     public static List<String> getResultData(Context context, int requestCode, int resultCode, @Nullable Intent data) {
         List<String> result = new ArrayList<>();
-        if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_CODE_CHOOSE) {
-            result = Matisse.obtainPathResult(data);
-        } else if (resultCode == Constant.CAMERA_RESULT_CODE) {
-            result = data.getStringArrayListExtra(Constant.CAMERA_PATH);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constant.REQUEST_CODE_CHOOSE) {
+                result = Matisse.obtainPathResult(data);
+            } else if (requestCode == Constant.CAMERA_RESULT_CODE) {
+                result = data.getStringArrayListExtra(Constant.CAMERA_PATH);
+            }
         }
         if (resultCode == Constant.CAMERA_ERROR_CODE) {
             Toast.makeText(context, "请检查相机权限", Toast.LENGTH_SHORT).show();

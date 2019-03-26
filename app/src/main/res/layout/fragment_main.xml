@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_centerInParent="true"
-            android:text="底部toast" />
+            android:text="底部Dialog" />
 
 
         <Button

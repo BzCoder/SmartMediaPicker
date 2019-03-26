@@ -1,44 +1,51 @@
 package com.bzcoder.mediapicker;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.util.Arrays;
-import java.util.List;
 
 import me.bzcoder.mediapicker.R;
 import me.bzcoder.mediapicker.camera.SmartMediaPicker;
 import me.bzcoder.mediapicker.config.MediaPickerEnum;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class SampleFragment extends Fragment implements View.OnClickListener {
     private TextView tvPath;
     private Button btnPath;
     private Button btnStartCamera;
     private Button btnStartPhoto;
     private SmartMediaPicker.Builder builder;
-    private Button jumpActivity;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initView();
     }
 
-    private void initView() {
-        tvPath = findViewById(R.id.tv_path);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_main, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        init();
+    }
+
+    private void init() {
+        tvPath = getView().findViewById(R.id.tv_path);
         tvPath.setOnClickListener(this);
-        btnPath = findViewById(R.id.btn_path);
+        btnPath = getView().findViewById(R.id.btn_path);
         btnPath.setOnClickListener(this);
-        btnStartCamera = findViewById(R.id.btn_start_camera);
+        btnStartCamera = getView().findViewById(R.id.btn_start_camera);
         btnStartCamera.setOnClickListener(this);
-        btnStartPhoto = findViewById(R.id.btn_start_photo);
+        btnStartPhoto = getView().findViewById(R.id.btn_start_photo);
         btnStartPhoto.setOnClickListener(this);
 
         builder = SmartMediaPicker.builder(this)
@@ -60,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .withMaxImageSize(5)
                 //设置图片加载引擎
                 .withImageEngine(new Glide4Engine());
-        jumpActivity = (Button) findViewById(R.id.jump_activity);
-        jumpActivity.setOnClickListener(this);
     }
 
     @Override
@@ -82,27 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .build()
                         .show();
                 break;
-            case R.id.jump_activity:
-                Intent intent = new Intent(MainActivity.this,SampleFragmentActivity.class);
-                startActivity(intent);
-                break;
+
             default:
                 break;
 
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        List<String> resultData = SmartMediaPicker.getResultData(this, requestCode, resultCode, data);
-        if (resultData != null && resultData.size() > 0) {
-            tvPath.setText(Arrays.toString(resultData.toArray()) + "\n文件类型："
-                    + SmartMediaPicker.getFileType(resultData.get(0)) + "\n视频时长: " +
-                    (SmartMediaPicker.getFileType(resultData.get(0)).contains("video") ?
-                            SmartMediaPicker.getVideoDuration(resultData.get(0)) : ""));
-
-        } else {
-            tvPath.setText("NO DATA");
         }
     }
 }

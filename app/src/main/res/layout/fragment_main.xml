@@ -16,10 +16,9 @@
         android:textSize="13sp" />
 
     <LinearLayout
-        android:id="@+id/rl_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 
@@ -27,8 +26,8 @@
             android:id="@+id/btn_path"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_margin="10dp"
+            android:layout_centerInParent="true"
             android:text="底部toast" />
 
 
@@ -36,28 +35,16 @@
             android:id="@+id/btn_start_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_margin="10dp"
+            android:layout_centerInParent="true"
             android:text="相机" />
 
         <Button
             android:id="@+id/btn_start_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_margin="10dp"
+            android:layout_centerInParent="true"
             android:text="照片选择" />
-
-
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/jump_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl_btn"
-        android:layout_centerInParent="true"
-        android:layout_margin="10dp"
-        android:text="跳转到Fragment" />
 </RelativeLayout>

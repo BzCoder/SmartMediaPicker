@@ -5,10 +5,9 @@ public interface Constant {
 
     int CAMERA_ERROR_CODE = 103;
 
-
     int REQUEST_CODE_CHOOSE = 23;
 
-    String CAMERA_PATH = "camera_path";
+    String CAMERA_PATH = "CAMERA_PATH";
 
     String BUTTON_STATE = "BUTTON_STATE";
 

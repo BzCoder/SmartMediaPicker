@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ import java.util.List;
 
 import me.bzcoder.mediapicker.config.Constant;
 import me.bzcoder.mediapicker.config.MediaPickerConfig;
+import me.bzcoder.mediapicker.config.MediaPickerEnum;
+import me.bzcoder.mediapicker.photopicker.PhotoPickUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -29,6 +33,8 @@ public class SmartMediaPicker {
     private volatile static SmartMediaPicker instance;
     private CameraDialogFragment cameraDialogFragment;
     private FragmentManager manager;
+    private FragmentActivity fragmentActivity;
+    private Fragment fragment;
     private MediaPickerConfig config;
 
     private SmartMediaPicker() {
@@ -38,8 +44,25 @@ public class SmartMediaPicker {
     }
 
     public void show() {
-        cameraDialogFragment.setConfig(config);
-        cameraDialogFragment.show(manager, "cameraDialogFragment");
+        if (config.getMediaPickerEnum() == MediaPickerEnum.PHOTO_PICKER) {
+            if (fragmentActivity != null) {
+                PhotoPickUtils.getAllSelector(fragmentActivity, config);
+            } else if (fragment != null) {
+                PhotoPickUtils.getAllSelector(fragment, config);
+            }
+
+        } else if (config.getMediaPickerEnum() == MediaPickerEnum.CAMERA) {
+            if (fragmentActivity != null) {
+                CameraUtils.startCamera(fragmentActivity, config.getCameraMediaType(), config.getMaxVideoLength());
+            } else if (fragment != null) {
+                CameraUtils.startCamera(fragment, config.getCameraMediaType(), config.getMaxVideoLength());
+            }
+        } else {
+            cameraDialogFragment.setConfig(config);
+            cameraDialogFragment.show(manager, "cameraDialogFragment");
+        }
+
+
     }
 
     public static SmartMediaPicker getInstance() {
@@ -82,6 +105,7 @@ public class SmartMediaPicker {
 
     /**
      * 获取文件类型
+     *
      * @param url
      * @return
      */
@@ -103,8 +127,12 @@ public class SmartMediaPicker {
         return result;
     }
 
-    public static Builder builder(FragmentManager manager) {
-        return new Builder(manager);
+    public static Builder builder(FragmentActivity fragmentActivity) {
+        return new Builder(fragmentActivity);
+    }
+
+    public static Builder builder(Fragment fragment) {
+        return new Builder(fragment);
     }
 
     private void setConfig(MediaPickerConfig config) {
@@ -117,6 +145,8 @@ public class SmartMediaPicker {
      */
     public static class Builder {
         private FragmentManager manager;
+        private Fragment fragment;
+        private FragmentActivity fragmentActivity;
         private boolean countable;
         private boolean originalEnable;
         private int maxOriginalSize;
@@ -128,9 +158,24 @@ public class SmartMediaPicker {
         private int maxVideoLength;
         private int maxVideoSize;
         private ImageEngine imageEngine;
+        private MediaPickerEnum mediaPickerType;
 
-        private Builder(FragmentManager manager) {
-            this.manager = manager;
+        private Builder(FragmentActivity fragmentActivity) {
+            this.fragmentActivity = fragmentActivity;
+            this.manager = fragmentActivity.getSupportFragmentManager();
+            setDefault();
+        }
+
+        private Builder(Fragment fragment) {
+            this.fragment = fragment;
+            this.manager = fragment.getChildFragmentManager();
+            setDefault();
+        }
+
+        /**
+         * 设置默认值
+         */
+        private void setDefault() {
             originalEnable = false;
             maxOriginalSize = 15;
             maxImageSelectable = 9;
@@ -140,12 +185,9 @@ public class SmartMediaPicker {
             maxImageSize = 15;
             maxVideoLength = 20000;
             maxVideoSize = 20;
+            mediaPickerType = MediaPickerEnum.BOTH;
         }
 
-        public Builder withManager(FragmentManager manager) {
-            this.manager = manager;
-            return this;
-        }
 
         public Builder withCountable(boolean countable) {
             this.countable = countable;
@@ -202,11 +244,18 @@ public class SmartMediaPicker {
             return this;
         }
 
+        public Builder withMediaPickerType(MediaPickerEnum mediaPickerType) {
+            this.mediaPickerType = mediaPickerType;
+            return this;
+        }
+
 
         public SmartMediaPicker build() {
-            SmartMediaPicker cameraDialogUtil = SmartMediaPicker.getInstance();
+            SmartMediaPicker smartMediaPicker = SmartMediaPicker.getInstance();
             MediaPickerConfig config = new MediaPickerConfig();
-            cameraDialogUtil.manager = manager;
+            smartMediaPicker.manager = manager;
+            smartMediaPicker.fragment = fragment;
+            smartMediaPicker.fragmentActivity = fragmentActivity;
             config.setCountable(countable);
             config.setOriginalEnable(originalEnable);
             config.setMaxOriginalSize(maxOriginalSize);
@@ -218,8 +267,9 @@ public class SmartMediaPicker {
             config.setMaxVideoLength(maxVideoLength);
             config.setMaxVideoSize(maxVideoSize);
             config.setImageEngine(imageEngine);
-            cameraDialogUtil.setConfig(config);
-            return cameraDialogUtil;
+            config.setMediaPickerEnum(mediaPickerType);
+            smartMediaPicker.setConfig(config);
+            return smartMediaPicker;
         }
     }
 }

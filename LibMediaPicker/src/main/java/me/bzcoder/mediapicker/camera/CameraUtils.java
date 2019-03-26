@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -23,19 +24,56 @@ import me.bzcoder.mediapicker.config.Constant;
  */
 public class CameraUtils {
     //权限申请自定义码
-    private static Context mContext;
-    private static Fragment mFragment;
     private static int buttonState = JCameraView.BUTTON_STATE_BOTH;
     private static int mDuration;
 
 
-    public static void startCamera(final Fragment fragment, Context context, int state, int duration) {
-        mFragment = fragment;
-        mContext = context;
+    public static void startCamera(final Fragment fragment, int state, int duration) {
         buttonState = state;
         mDuration = duration;
+        startCameraActivity(fragment);
+    }
 
-        RxPermissions rxPermissions = new RxPermissions(mFragment);
+    public static void startCamera(final FragmentActivity fragmentActivity, int state, int duration) {
+        buttonState = state;
+        mDuration = duration;
+        startCameraActivity(fragmentActivity);
+    }
+
+    private static void startCameraActivity(final FragmentActivity fragmentActivity) {
+        RxPermissions rxPermissions = new RxPermissions(fragmentActivity);
+        rxPermissions.request(
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                if (aBoolean){
+                    startActivity(fragmentActivity);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Toast.makeText(fragmentActivity, "请确认开启录音，相机，读写存储权限", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+
+    private static void startCameraActivity(final Fragment fragment) {
+        RxPermissions rxPermissions = new RxPermissions(fragment);
         rxPermissions.request(
                 Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.CAMERA,
@@ -55,7 +93,7 @@ public class CameraUtils {
 
             @Override
             public void onError(Throwable e) {
-                Toast.makeText(mContext, "请确认开启录音，相机，读写存储权限", Toast.LENGTH_SHORT).show();
+                Toast.makeText(fragment.getActivity(), "请确认开启录音，相机，读写存储权限", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -63,8 +101,6 @@ public class CameraUtils {
 
             }
         });
-
-
     }
 
 

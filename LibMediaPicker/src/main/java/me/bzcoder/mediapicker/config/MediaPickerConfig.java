@@ -51,7 +51,15 @@ public class MediaPickerConfig {
      */
     private int maxVideoSize;
 
+    /**
+     * 图片加载引擎
+     */
     private ImageEngine imageEngine;
+
+    /**
+     * 弹出类型
+     */
+    private MediaPickerEnum mediaPickerEnum;
 
     public MediaPickerConfig() {
 
@@ -164,5 +172,15 @@ public class MediaPickerConfig {
     public void setImageEngine(ImageEngine imageEngine) {
         this.imageEngine = imageEngine;
     }
+
+
+    public MediaPickerEnum getMediaPickerEnum() {
+        return mediaPickerEnum;
+    }
+
+    public void setMediaPickerEnum(MediaPickerEnum mediaPickerEnum) {
+        this.mediaPickerEnum = mediaPickerEnum;
+    }
+
 
 }

@@ -85,7 +85,7 @@ public class CameraDialogFragment extends DialogFragment {
         ivTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CameraUtils.startCamera(CameraDialogFragment.this, getContext(), config.getCameraMediaType(), config.getMaxVideoLength());
+                CameraUtils.startCamera(CameraDialogFragment.this, config.getCameraMediaType(), config.getMaxVideoLength());
                 dismiss();
             }
         });

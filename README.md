@@ -60,7 +60,7 @@
                 .withMaxImageSize(5)
                 //设置图片加载引擎
                 .withImageEngine(new Glide4Engine())
-                //弹出类别
+                //弹出类别，默认弹出底部选择栏，也可以选择单独跳转
                 .withMediaPickerType(MediaPickerEnum.BOTH)
                 .build()
                 .show();

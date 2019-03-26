@@ -80,6 +80,11 @@ public class SmartMediaPicker {
     }
 
 
+    /**
+     * 获取文件类型
+     * @param url
+     * @return
+     */
     public static String getFileType(String url) {
         String extension = MimeTypeMap.getFileExtensionFromUrl(url);
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);

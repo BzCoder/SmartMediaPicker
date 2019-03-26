@@ -71,7 +71,7 @@ public class FileSizeFilter extends Filter {
                 return new IncapableCause(IncapableCause.DIALOG,  context.getString(R.string.error_size,  mMaxImageSize / Filter.K / Filter.K));
             }
             if (size.x > mMaxWidth || size.y > mMaxHeight || item.size > mMaxImageSize) {
-                return new IncapableCause(IncapableCause.DIALOG, context.getString(R.string.error_gif, mMaxWidth, mMaxHeight
+                return new IncapableCause(IncapableCause.DIALOG, context.getString(R.string.error_gif,mMaxHeight,mMaxWidth
                         , String.valueOf(PhotoMetadataUtils.getSizeInMB(mMaxImageSize))));
             }
 

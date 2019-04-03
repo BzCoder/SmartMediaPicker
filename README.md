@@ -43,9 +43,9 @@
 ### 代码添加：
 ```java
         builder = SmartMediaPicker.builder(this)
-                //最大图片选择数目
+                //最大图片选择数目 如果不需要图片 将数目设置为0
                 .withMaxImageSelectable(5)
-                //最大视频选择数目
+                //最大视频选择数目 如果不需要视频 将数目设置为0
                 .withMaxVideoSelectable(1)
                 //图片选择器是否显示数字
                 .withCountable(true)

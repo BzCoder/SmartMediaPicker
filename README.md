@@ -87,4 +87,4 @@
 ### 实用工具类：
 - SmartMediaPicker.getFileType(String url) ：获取文件类型
 - SmartMediaPicker.getVideoDuration(String path)：获取视频时长
-- SmartMediaPicker.getVideoPhoto(SString path)：获取视频缩略图
+- SmartMediaPicker.getVideoPhoto(String path)：获取视频缩略图

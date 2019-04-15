@@ -12,15 +12,16 @@ android {
 
 
     compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_7
-        sourceCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
     lintOptions {
         abortOnError false
     }
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        api "com.zhihu.android:matisse:0.5.2-beta4"
+        api ("com.zhihu.android:matisse:0.5.2-beta4")
+
         implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
         implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     }

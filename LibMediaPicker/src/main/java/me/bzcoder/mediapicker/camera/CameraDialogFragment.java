@@ -6,6 +6,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,6 +34,8 @@ public class CameraDialogFragment extends DialogFragment {
     private ImageView ivPickPhoto;
     private ImageView ivCancel;
     private MediaPickerConfig config;
+    private Fragment fragment;
+    private FragmentActivity fragmentActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,34 +86,41 @@ public class CameraDialogFragment extends DialogFragment {
 
     private void initView(View view) {
         ivTakePhoto = view.findViewById(R.id.iv_take_photo);
-        ivTakePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CameraUtils.startCamera(CameraDialogFragment.this, config.getCameraMediaType(), config.getMaxVideoLength());
-                dismiss();
+        ivTakePhoto.setOnClickListener(v -> {
+            if (fragment != null) {
+                CameraUtils.startCamera(fragment, config.getCameraMediaType(), config.getMaxVideoLength());
             }
+            if (fragmentActivity != null) {
+                CameraUtils.startCamera(fragmentActivity, config.getCameraMediaType(), config.getMaxVideoLength());
+            }
+            dismiss();
         });
         ivPickPhoto = view.findViewById(R.id.iv_pick_photo);
-        ivPickPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PhotoPickUtils.getAllSelector(CameraDialogFragment.this, config);
-                dismiss();
+        ivPickPhoto.setOnClickListener(v -> {
+            if (fragment != null) {
+                PhotoPickUtils.getAllSelector(fragment, config);
             }
+            if (fragmentActivity != null) {
+                PhotoPickUtils.getAllSelector(fragmentActivity, config);
+            }
+
+            dismiss();
         });
         ivCancel = view.findViewById(R.id.iv_cancel);
-        ivCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        ivCancel.setOnClickListener(v -> dismiss());
     }
 
 
-    public void setConfig(MediaPickerConfig config) {
+    public void setConfig(Fragment fragment, MediaPickerConfig config) {
+        this.fragment = fragment;
         this.config = config;
+        this.fragmentActivity = null;
+
     }
 
-
+    public void setConfig(FragmentActivity fragmentActivity, MediaPickerConfig config) {
+        this.fragment = null;
+        this.config = config;
+        this.fragmentActivity = fragmentActivity;
+    }
 }

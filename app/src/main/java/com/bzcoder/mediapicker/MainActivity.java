@@ -11,9 +11,9 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.List;
 
-import me.bzcoder.mediapicker.R;
 import me.bzcoder.mediapicker.SmartMediaPicker;
 import me.bzcoder.mediapicker.config.MediaPickerEnum;
+import me.bzcoder.mediapicker.sample.R;
 
 /**
  * @author : BaoZhou

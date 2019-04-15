@@ -60,7 +60,11 @@ public class SmartMediaPicker {
                 CameraUtils.startCamera(fragment, config.getCameraMediaType(), config.getMaxVideoLength());
             }
         } else {
-            cameraDialogFragment.setConfig(config);
+            if (fragmentActivity != null) {
+                cameraDialogFragment.setConfig(fragmentActivity,config);
+            } else if (fragment != null) {
+                cameraDialogFragment.setConfig(fragment,config);
+            }
             cameraDialogFragment.show(manager, "cameraDialogFragment");
         }
 

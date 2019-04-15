@@ -11,7 +11,7 @@
 |![](image/20190315005039.gif) | ![](image/20190315005454.gif) |
 
 ## 改动
-- v1.0.8
+- v1.0.8 (有严重BUG，弃用)
    - 新增单独调用相机，图片选择器功能
    - SmartMediaPicker.builder()参数改为Fragment与FragmentActivity
    - 修复文字提示BUG

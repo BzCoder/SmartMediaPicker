@@ -11,20 +11,20 @@
 |![](image/20190315005039.gif) | ![](image/20190315005454.gif) |
 
 ## 改动
-- v1.0.9
+### v 1.0.9
   - 修复底部弹窗无法跳转返回后无法选择媒体的BUG!!
   - 优化Sample
-- v1.0.8 (有严重BUG，弃用)
+### v 1.0.8 有严重Bug弃用
    - 新增单独调用相机，图片选择器功能
    - SmartMediaPicker.builder()参数改为Fragment与FragmentActivity
    - 修复文字提示BUG
    - 修复ResultCode BUG
-- v1.0.7
+### v 1.0.7
    - 添加实用工具类
    - 不再直接依赖Glide
-- v1.0.6
+### v 1.0.6
    - 修复内存泄漏问题
-- v1.0.5
+### v 1.0.5
    - 发布
 ## 使用方法
 ### gradle添加：

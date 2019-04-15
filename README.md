@@ -11,6 +11,9 @@
 |![](image/20190315005039.gif) | ![](image/20190315005454.gif) |
 
 ## 改动
+- v1.0.9
+  - 修复底部弹窗无法跳转返回后无法选择媒体的BUG!!
+  - 优化Sample
 - v1.0.8 (有严重BUG，弃用)
    - 新增单独调用相机，图片选择器功能
    - SmartMediaPicker.builder()参数改为Fragment与FragmentActivity
@@ -37,7 +40,7 @@
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:SmartMediaPicker:1.0.8'
+	        implementation 'com.github.BzCoder:SmartMediaPicker:1.0.9'
 	}
 ```
 ### 代码添加：

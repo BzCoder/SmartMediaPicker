@@ -11,8 +11,10 @@
 |![](image/20190315005039.gif) | ![](image/20190315005454.gif) |
 
 ## 改动
+### v 1.1.0
+  - 新增加前置摄像头是否开启镜像翻转选项 isMiiror
 ### v 1.0.9
-  - 修复底部弹窗无法跳转返回后无法选择媒体的BUG!!
+  - 修复底部弹窗无法跳转返回后无法获取到文件的BUG!!
   - 优化Sample
 ### v 1.0.8 有严重Bug弃用
    - 新增单独调用相机，图片选择器功能
@@ -40,7 +42,7 @@
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:SmartMediaPicker:1.0.9'
+	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.0'
 	}
 ```
 ### 代码添加：
@@ -64,7 +66,9 @@
                 .withMaxImageSize(5)
                 //设置图片加载引擎
                 .withImageEngine(new Glide4Engine())
-                //弹出类别，默认弹出底部选择栏，也可以选择单独跳转
+                //前置摄像头拍摄是否镜像翻转图像 默认为true 与微信一致的话为false
+                .withisMirror(false)
+	        //弹出类别，默认弹出底部选择栏，也可以选择单独跳转
                 .withMediaPickerType(MediaPickerEnum.BOTH)
                 .build()
                 .show();

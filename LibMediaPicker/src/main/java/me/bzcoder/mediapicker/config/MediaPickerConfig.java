@@ -6,32 +6,48 @@ import com.zhihu.matisse.engine.ImageEngine;
 import java.util.Set;
 
 import me.bzcoder.mediapicker.cameralibrary.JCameraView;
-
+/**
+ * 配置类
+ * @author : BaoZhou
+ * @date : 2019/4/16 9:51
+ */
 public class MediaPickerConfig {
+
     /**
      * 选择是否显示数字
      */
     private boolean countable;
+
+    /**
+     * 前置摄像头拍摄是否启用镜像 默认开启
+     */
+    private boolean isMirror;
+
     /**
      * 是否可以选择原图
      */
     private boolean originalEnable;
+
     /**
      * 最大原图大小 单位MB
      */
     private int maxOriginalSize;
+
     /**
      * 最大图片可选择的数目
      */
     private int maxImageSelectable;
+
     /**
      * 最大视频可选择的数目
      */
     private int maxVideoSelectable;
+
     /**
      * 最大图片宽度
      */
     private int maxWidth;
+
     /**
      * 最大图片高度
      */
@@ -46,6 +62,7 @@ public class MediaPickerConfig {
      * 单位：毫秒 ,默认20秒
      */
     private int maxVideoLength;
+
     /**
      * 单位：MB
      */
@@ -57,7 +74,11 @@ public class MediaPickerConfig {
     private ImageEngine imageEngine;
 
     /**
-     * 弹出类型
+     * 弹出类型 有三种类型
+     *
+     * BOTH：弹出选择栏
+     * PHOTO_PICKER：直接跳转图片选择器
+     * CAMERA：直接跳转照相机
      */
     private MediaPickerEnum mediaPickerEnum;
 
@@ -72,6 +93,15 @@ public class MediaPickerConfig {
 
     public void setCountable(boolean countable) {
         this.countable = countable;
+    }
+
+
+    public boolean isMirror() {
+        return isMirror;
+    }
+
+    public void setMirror(boolean mirror) {
+        isMirror = mirror;
     }
 
     public boolean isOriginalEnable() {

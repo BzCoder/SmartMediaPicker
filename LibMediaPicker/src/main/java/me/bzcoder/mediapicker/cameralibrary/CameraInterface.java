@@ -100,6 +100,8 @@ public class CameraInterface implements Camera.PreviewCallback {
 
     //视频质量
     private int mediaQuality = JCameraView.MEDIA_QUALITY_MIDDLE;
+
+
     private SensorManager sm = null;
 
     //获取CameraInterface单例
@@ -122,6 +124,7 @@ public class CameraInterface implements Camera.PreviewCallback {
     }
 
     private SensorEventListener sensorEventListener = new SensorEventListener() {
+        @Override
         public void onSensorChanged(SensorEvent event) {
             if (Sensor.TYPE_ACCELEROMETER != event.sensor.getType()) {
                 return;
@@ -453,7 +456,7 @@ public class CameraInterface implements Camera.PreviewCallback {
      */
     private int nowAngle;
 
-    public void takePicture(final TakePictureCallback callback) {
+    public void takePicture(boolean isMirror,final TakePictureCallback callback) {
         if (mCamera == null) {
             return;
         }
@@ -475,16 +478,14 @@ public class CameraInterface implements Camera.PreviewCallback {
                 if (SELECTED_CAMERA == CAMERA_POST_POSITION) {
                     matrix.setRotate(nowAngle);
                 } else if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
+                    //翻转bitmap (-1,1)左右翻转  (1,-1)上下翻转
                     matrix.setRotate(360 - nowAngle);
-                    matrix.postScale(-1, 1);
+                    if(!isMirror){
+                        matrix.postScale(-1, 1);
+                    }
                 }
 
                 bitmap = createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-                if (SELECTED_CAMERA == CAMERA_FRONT_POSITION)
-                {
-                    bitmap = turnCurrentLayer(bitmap,-1,1);
-                }
 
                 if (callback != null) {
                     if (nowAngle == 90 || nowAngle == 270) {
@@ -785,28 +786,4 @@ public class CameraInterface implements Camera.PreviewCallback {
         this.isPreviewing = res;
     }
 
-    /**
-     * 翻转bitmap (-1,1)左右翻转  (1,-1)上下翻转
-     * @param srcBitmap
-     * @param sx
-     * @param sy
-     * @return
-     */
-    public Bitmap turnCurrentLayer(Bitmap srcBitmap, float sx, float sy){
-        Bitmap cacheBitmap = Bitmap.createBitmap(srcBitmap.getWidth(), srcBitmap.getHeight(), Bitmap.Config.ARGB_8888);// 创建缓存像素的位图
-        int w = cacheBitmap .getWidth();
-        int h=cacheBitmap.getHeight();
-
-        Canvas cv = new Canvas(cacheBitmap );//使用canvas在bitmap上面画像素
-
-        Matrix mMatrix = new Matrix();//使用矩阵 完成图像变换
-
-        mMatrix.postScale(sx, sy);//重点代码，记住就ok
-
-        Bitmap resultBitmap= Bitmap.createBitmap(srcBitmap, 0, 0, w, h, mMatrix, true);
-        cv.drawBitmap(resultBitmap,
-                new Rect(0, 0, srcBitmap.getWidth(), srcBitmap.getHeight()),
-                new Rect(0, 0, w, h), null);
-        return resultBitmap;
-    }
 }

@@ -39,7 +39,7 @@ class PreviewState implements State {
     @Override
     public void focus(float x, float y, CameraInterface.FocusCallback callback) {
         LogUtil.i("preview state focus");
-        if (machine.getView().handlerFoucs(x, y)) {
+        if (machine.getView().handlerFocus(x, y)) {
             CameraInterface.getInstance().handleFocus(machine.getContext(), x, y, callback);
         }
     }
@@ -55,14 +55,11 @@ class PreviewState implements State {
     }
 
     @Override
-    public void capture() {
-        CameraInterface.getInstance().takePicture(new CameraInterface.TakePictureCallback() {
-            @Override
-            public void captureResult(Bitmap bitmap, boolean isVertical) {
-                machine.getView().showPicture(bitmap, isVertical);
-                machine.setState(machine.getBorrowPictureState());
-                LogUtil.i("capture");
-            }
+    public void capture(boolean isMirror) {
+        CameraInterface.getInstance().takePicture(isMirror,(bitmap, isVertical) -> {
+            machine.getView().showPicture(bitmap, isVertical);
+            machine.setState(machine.getBorrowPictureState());
+            LogUtil.i("capture");
         });
     }
 

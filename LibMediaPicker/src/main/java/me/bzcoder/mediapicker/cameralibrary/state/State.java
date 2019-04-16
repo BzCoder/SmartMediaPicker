@@ -25,7 +25,7 @@ public interface State {
 
     void restart();
 
-    void capture();
+    void capture(boolean isMirror);
 
     void record(Surface surface, float screenProp);
 

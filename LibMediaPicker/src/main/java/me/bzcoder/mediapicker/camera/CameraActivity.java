@@ -42,13 +42,14 @@ public class CameraActivity extends AppCompatActivity {
 
     public int duration;
 
+    public boolean isMirror;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         buttonState = getIntent().getIntExtra(Constant.BUTTON_STATE, JCameraView.BUTTON_STATE_BOTH);
-        duration = getIntent().getIntExtra(Constant.DURATION, 10*1000);
-
+        duration = getIntent().getIntExtra(Constant.DURATION, 10 * 1000);
+        isMirror = getIntent().getBooleanExtra(Constant.IS_MIRROR, true);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -59,7 +60,8 @@ public class CameraActivity extends AppCompatActivity {
         jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
         jCameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_MIDDLE);
         jCameraView.setDuration(duration);
-        jCameraView.setErrorLisenter(new ErrorListener() {
+        jCameraView.setMirror(isMirror);
+        jCameraView.setErrorListener(new ErrorListener() {
             @Override
             public void onError() {
                 //错误监听
@@ -86,7 +88,7 @@ public class CameraActivity extends AppCompatActivity {
         } else {
             jCameraView.setTip("轻触拍照，长按录制视频");
         }
-        jCameraView.setJCameraLisenter(new JCameraListener() {
+        jCameraView.setJCameraListener(new JCameraListener() {
             @Override
             public void captureSuccess(Bitmap bitmap) {
                 //获取图片bitmap
@@ -131,7 +133,7 @@ public class CameraActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //全屏显示
-        if (Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE

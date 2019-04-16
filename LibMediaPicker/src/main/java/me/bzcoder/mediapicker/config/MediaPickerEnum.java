@@ -1,5 +1,12 @@
 package me.bzcoder.mediapicker.config;
 
+
+/**
+ * 媒体选择器弹出类型枚举类
+ *
+ * @author : BaoZhou
+ * @date : 2019/4/16 9:42
+ */
 public enum MediaPickerEnum {
     /**
      * BOTH：弹出选择栏

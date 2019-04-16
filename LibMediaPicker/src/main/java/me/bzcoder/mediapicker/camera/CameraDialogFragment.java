@@ -88,10 +88,10 @@ public class CameraDialogFragment extends DialogFragment {
         ivTakePhoto = view.findViewById(R.id.iv_take_photo);
         ivTakePhoto.setOnClickListener(v -> {
             if (fragment != null) {
-                CameraUtils.startCamera(fragment, config.getCameraMediaType(), config.getMaxVideoLength());
+                CameraUtils.startCamera(fragment, config);
             }
             if (fragmentActivity != null) {
-                CameraUtils.startCamera(fragmentActivity, config.getCameraMediaType(), config.getMaxVideoLength());
+                CameraUtils.startCamera(fragmentActivity, config);
             }
             dismiss();
         });

@@ -28,6 +28,8 @@ import static android.app.Activity.RESULT_OK;
 
 
 /**
+ * SmartMediaPicker 生成类
+ *
  * @author : BaoZhou
  * @date : 2019/3/14 21:38
  */
@@ -46,29 +48,32 @@ public class SmartMediaPicker {
     }
 
     public void show() {
+        //只启动照片选择
         if (config.getMediaPickerEnum() == MediaPickerEnum.PHOTO_PICKER) {
             if (fragmentActivity != null) {
                 PhotoPickUtils.getAllSelector(fragmentActivity, config);
             } else if (fragment != null) {
                 PhotoPickUtils.getAllSelector(fragment, config);
             }
-
-        } else if (config.getMediaPickerEnum() == MediaPickerEnum.CAMERA) {
+        }
+        //只启动相机
+        else if (config.getMediaPickerEnum() == MediaPickerEnum.CAMERA) {
             if (fragmentActivity != null) {
-                CameraUtils.startCamera(fragmentActivity, config.getCameraMediaType(), config.getMaxVideoLength());
+                CameraUtils.startCamera(fragmentActivity, config);
             } else if (fragment != null) {
-                CameraUtils.startCamera(fragment, config.getCameraMediaType(), config.getMaxVideoLength());
+                CameraUtils.startCamera(fragment, config);
             }
-        } else {
+
+        }
+        //启动下方弹框
+        else {
             if (fragmentActivity != null) {
-                cameraDialogFragment.setConfig(fragmentActivity,config);
+                cameraDialogFragment.setConfig(fragmentActivity, config);
             } else if (fragment != null) {
-                cameraDialogFragment.setConfig(fragment,config);
+                cameraDialogFragment.setConfig(fragment, config);
             }
             cameraDialogFragment.show(manager, "cameraDialogFragment");
         }
-
-
     }
 
     public static SmartMediaPicker getInstance() {
@@ -157,6 +162,7 @@ public class SmartMediaPicker {
         private FragmentActivity fragmentActivity;
         private boolean countable;
         private boolean originalEnable;
+        private boolean isMirror;
         private int maxOriginalSize;
         private int maxImageSelectable;
         private int maxVideoSelectable;
@@ -184,6 +190,8 @@ public class SmartMediaPicker {
          * 设置默认值
          */
         private void setDefault() {
+            countable = true;
+            isMirror = true;
             originalEnable = false;
             maxOriginalSize = 15;
             maxImageSelectable = 9;
@@ -196,6 +204,10 @@ public class SmartMediaPicker {
             mediaPickerType = MediaPickerEnum.BOTH;
         }
 
+        public Builder withisMirror(boolean isMirror) {
+            this.isMirror = isMirror;
+            return this;
+        }
 
         public Builder withCountable(boolean countable) {
             this.countable = countable;
@@ -265,6 +277,7 @@ public class SmartMediaPicker {
             smartMediaPicker.fragment = fragment;
             smartMediaPicker.fragmentActivity = fragmentActivity;
             config.setCountable(countable);
+            config.setMirror(isMirror);
             config.setOriginalEnable(originalEnable);
             config.setMaxOriginalSize(maxOriginalSize);
             config.setMaxImageSelectable(maxImageSelectable);

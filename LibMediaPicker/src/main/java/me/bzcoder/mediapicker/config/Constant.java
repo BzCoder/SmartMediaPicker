@@ -12,4 +12,6 @@ public interface Constant {
     String BUTTON_STATE = "BUTTON_STATE";
 
     String DURATION = "DURATION";
+
+    String IS_MIRROR = "IS_MIRROR";
 }

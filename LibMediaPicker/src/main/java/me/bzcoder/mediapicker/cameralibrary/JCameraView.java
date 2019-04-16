@@ -81,7 +81,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
 
 
     //回调监听
-    private JCameraListener jCameraLisenter;
+    private JCameraListener jCameraListener;
     private ClickListener leftClickListener;
     private ClickListener rightClickListener;
 
@@ -109,6 +109,10 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     private int iconLeft = 0;       //左图标
     private int iconRight = 0;      //右图标
     private int duration = 10 * 1000;       //录制时间
+
+
+    private boolean isMirror = true;       //是否镜像
+
 
     public void setDuration(int duration) {
         this.duration = duration;
@@ -191,7 +195,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             public void takePictures() {
                 mSwitchCamera.setVisibility(INVISIBLE);
                 mFlashLamp.setVisibility(INVISIBLE);
-                machine.capture();
+                machine.capture(isMirror);
             }
 
             @Override
@@ -227,8 +231,8 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
 
             @Override
             public void recordError() {
-                if (errorLisenter != null) {
-                    errorLisenter.AudioPermissionError();
+                if (errorListener != null) {
+                    errorListener.AudioPermissionError();
                 }
             }
         });
@@ -248,8 +252,8 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
 //        mCaptureLayout.setReturnLisenter(new ReturnListener() {
 //            @Override
 //            public void onReturn() {
-//                if (jCameraLisenter != null) {
-//                    jCameraLisenter.quit();
+//                if (jCameraListener != null) {
+//                    jCameraListener.quit();
 //                }
 //            }
 //        });
@@ -401,17 +405,17 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     }
 
 
-    public void setJCameraLisenter(JCameraListener jCameraLisenter) {
-        this.jCameraLisenter = jCameraLisenter;
+    public void setJCameraListener(JCameraListener jCameraListener) {
+        this.jCameraListener = jCameraListener;
     }
 
 
-    private ErrorListener errorLisenter;
+    private ErrorListener errorListener;
 
     //启动Camera错误回调
-    public void setErrorLisenter(ErrorListener errorLisenter) {
-        this.errorLisenter = errorLisenter;
-        CameraInterface.getInstance().setErrorLinsenter(errorLisenter);
+    public void setErrorListener(ErrorListener errorListener) {
+        this.errorListener = errorListener;
+        CameraInterface.getInstance().setErrorLinsenter(errorListener);
     }
 
     //设置CaptureButton功能（拍照和录像）
@@ -455,14 +459,14 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
                 stopVideo();    //停止播放
                 mVideoView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 machine.start(mVideoView.getHolder(), screenProp);
-                if (jCameraLisenter != null) {
-                    jCameraLisenter.recordSuccess(videoUrl, firstFrame);
+                if (jCameraListener != null) {
+                    jCameraListener.recordSuccess(videoUrl, firstFrame);
                 }
                 break;
             case TYPE_PICTURE:
                 mPhoto.setVisibility(INVISIBLE);
-                if (jCameraLisenter != null) {
-                    jCameraLisenter.captureSuccess(captureBitmap);
+                if (jCameraListener != null) {
+                    jCameraListener.captureSuccess(captureBitmap);
                 }
                 break;
             case TYPE_SHORT:
@@ -546,11 +550,11 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     @Override
     public void startPreviewCallback() {
         LogUtil.i("startPreviewCallback");
-        handlerFoucs(mFocusView.getWidth() / 2, mFocusView.getHeight() / 2);
+        handlerFocus(mFocusView.getWidth() / 2, mFocusView.getHeight() / 2);
     }
 
     @Override
-    public boolean handlerFoucs(float x, float y) {
+    public boolean handlerFocus(float x, float y) {
         if (y > mCaptureLayout.getTop()) {
             return false;
         }
@@ -603,4 +607,13 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
                 break;
         }
     }
+
+    public boolean isMirror() {
+        return isMirror;
+    }
+
+    public void setMirror(boolean mirror) {
+        isMirror = mirror;
+    }
+
 }

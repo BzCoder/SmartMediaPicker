@@ -25,5 +25,5 @@ public interface CameraView {
 
     void startPreviewCallback();
 
-    boolean handlerFoucs(float x, float y);
+    boolean handlerFocus(float x, float y);
 }

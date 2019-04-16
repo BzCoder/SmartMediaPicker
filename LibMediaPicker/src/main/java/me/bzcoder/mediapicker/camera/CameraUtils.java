@@ -15,6 +15,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import me.bzcoder.mediapicker.cameralibrary.JCameraView;
 import me.bzcoder.mediapicker.config.Constant;
+import me.bzcoder.mediapicker.config.MediaPickerConfig;
 
 /**
  * 拍照相机工具类
@@ -26,17 +27,19 @@ public class CameraUtils {
     //权限申请自定义码
     private static int buttonState = JCameraView.BUTTON_STATE_BOTH;
     private static int mDuration;
+    private static boolean mIsMirror;
 
-
-    public static void startCamera(final Fragment fragment, int state, int duration) {
-        buttonState = state;
-        mDuration = duration;
+    public static void startCamera(final Fragment fragment, final MediaPickerConfig config) {
+        buttonState = config.getCameraMediaType();
+        mDuration = config.getMaxVideoLength();
+        mIsMirror = config.isMirror();
         startCameraActivity(fragment);
     }
 
-    public static void startCamera(final FragmentActivity fragmentActivity, int state, int duration) {
-        buttonState = state;
-        mDuration = duration;
+    public static void startCamera(final FragmentActivity fragmentActivity, final MediaPickerConfig config) {
+        buttonState = config.getCameraMediaType();
+        mDuration = config.getMaxVideoLength();
+        mIsMirror = config.isMirror();
         startCameraActivity(fragmentActivity);
     }
 
@@ -54,7 +57,7 @@ public class CameraUtils {
 
             @Override
             public void onNext(Boolean aBoolean) {
-                if (aBoolean){
+                if (aBoolean) {
                     startActivity(fragmentActivity);
                 }
             }
@@ -86,7 +89,7 @@ public class CameraUtils {
 
             @Override
             public void onNext(Boolean aBoolean) {
-                if (aBoolean){
+                if (aBoolean) {
                     startActivity(fragment);
                 }
             }
@@ -109,6 +112,7 @@ public class CameraUtils {
         intent.setClass(activity, CameraActivity.class);
         intent.putExtra(Constant.BUTTON_STATE, buttonState);
         intent.putExtra(Constant.DURATION, mDuration);
+        intent.putExtra(Constant.IS_MIRROR, mIsMirror);
         activity.startActivityForResult(intent, Constant.CAMERA_RESULT_CODE);
     }
 
@@ -117,6 +121,7 @@ public class CameraUtils {
         intent.setClass(fragment.getActivity(), CameraActivity.class);
         intent.putExtra(Constant.BUTTON_STATE, buttonState);
         intent.putExtra(Constant.DURATION, mDuration);
+        intent.putExtra(Constant.IS_MIRROR, mIsMirror);
         fragment.startActivityForResult(intent, Constant.CAMERA_RESULT_CODE);
     }
 

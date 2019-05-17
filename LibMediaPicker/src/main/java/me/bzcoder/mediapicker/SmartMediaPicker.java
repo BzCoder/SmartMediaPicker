@@ -35,11 +35,10 @@ import static android.app.Activity.RESULT_OK;
  * @date : 2019/3/14 21:38
  */
 public class SmartMediaPicker {
-    private volatile static SmartMediaPicker instance;
     private FragmentManager manager;
     private CameraDialogFragment cameraDialogFragment;
-    private WeakReference<FragmentActivity>  fragmentActivity;
-    private WeakReference<Fragment>  fragment;
+    private WeakReference<FragmentActivity> fragmentActivity;
+    private WeakReference<Fragment> fragment;
     private MediaPickerConfig config;
 
     private SmartMediaPicker() {
@@ -51,42 +50,32 @@ public class SmartMediaPicker {
     public void show() {
         //只启动照片选择
         if (config.getMediaPickerEnum() == MediaPickerEnum.PHOTO_PICKER) {
-            if (fragmentActivity.get() != null) {
+            if (fragmentActivity != null) {
                 PhotoPickUtils.getAllSelector(fragmentActivity.get(), config);
-            } else if (fragment.get() != null) {
+            } else if (fragment != null) {
                 PhotoPickUtils.getAllSelector(fragment.get(), config);
             }
         }
         //只启动相机
         else if (config.getMediaPickerEnum() == MediaPickerEnum.CAMERA) {
-            if (fragmentActivity.get() != null) {
+            if (fragmentActivity != null) {
                 CameraUtils.startCamera(fragmentActivity.get(), config);
-            } else if (fragment.get() != null) {
+            } else if (fragment != null) {
                 CameraUtils.startCamera(fragment.get(), config);
             }
 
         }
         //启动下方弹框
         else {
-            if (fragmentActivity.get() != null) {
+            if (fragmentActivity != null) {
                 cameraDialogFragment.setConfig(fragmentActivity.get(), config);
-            } else if (fragment.get() != null) {
+            } else if (fragment != null) {
                 cameraDialogFragment.setConfig(fragment.get(), config);
             }
             cameraDialogFragment.show(manager, "cameraDialogFragment");
         }
     }
 
-    public static SmartMediaPicker getInstance() {
-        if (instance == null) {
-            synchronized (SmartMediaPicker.class) {
-                if (instance == null) {
-                    instance = new SmartMediaPicker();
-                }
-            }
-        }
-        return instance;
-    }
 
     /**
      * 根据路径得到视频缩略图
@@ -159,8 +148,8 @@ public class SmartMediaPicker {
      */
     public static class Builder {
         private FragmentManager manager;
-        private Fragment fragment;
-        private FragmentActivity fragmentActivity;
+        private WeakReference<Fragment> fragment;
+        private WeakReference<FragmentActivity> fragmentActivity;
         private boolean countable;
         private boolean originalEnable;
         private boolean isMirror;
@@ -176,13 +165,13 @@ public class SmartMediaPicker {
         private MediaPickerEnum mediaPickerType;
 
         private Builder(FragmentActivity fragmentActivity) {
-            this.fragmentActivity = fragmentActivity;
+            this.fragmentActivity = new WeakReference<>(fragmentActivity);
             this.manager = fragmentActivity.getSupportFragmentManager();
             setDefault();
         }
 
         private Builder(Fragment fragment) {
-            this.fragment = fragment;
+            this.fragment =  new WeakReference<>(fragment);
             this.manager = fragment.getChildFragmentManager();
             setDefault();
         }
@@ -272,11 +261,11 @@ public class SmartMediaPicker {
 
 
         public SmartMediaPicker build() {
-            SmartMediaPicker smartMediaPicker = SmartMediaPicker.getInstance();
+            SmartMediaPicker smartMediaPicker = new SmartMediaPicker();
             MediaPickerConfig config = new MediaPickerConfig();
             smartMediaPicker.manager = manager;
-            smartMediaPicker.fragment = new WeakReference<>(fragment);
-            smartMediaPicker.fragmentActivity =  new WeakReference<>(fragmentActivity);
+            smartMediaPicker.fragment = fragment;
+            smartMediaPicker.fragmentActivity = fragmentActivity;
             config.setCountable(countable);
             config.setMirror(isMirror);
             config.setOriginalEnable(originalEnable);

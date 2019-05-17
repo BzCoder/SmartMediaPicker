@@ -117,7 +117,6 @@ public class CameraDialogFragment extends DialogFragment {
         this.fragment = new WeakReference<>(fragment);
         this.config = config;
         this.fragmentActivity = null;
-
     }
 
     public void setConfig(FragmentActivity fragmentActivity, MediaPickerConfig config) {

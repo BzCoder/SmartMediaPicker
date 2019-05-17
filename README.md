@@ -1,5 +1,6 @@
 # SmartMediaPicker 多媒体选择器 
 [![](https://jitpack.io/v/BzCoder/SmartMediaPicker.svg)](https://jitpack.io/#BzCoder/SmartMediaPicker)
+[![Build Status](https://www.travis-ci.org/BzCoder/SmartMediaPicker.svg?branch=master)](https://www.travis-ci.org/BzCoder/SmartMediaPicker)
 
 主要还是站在了巨人的肩膀上，封装了以下两个库，修复[仿微信拍照Android控件](https://github.com/CJT2325/CameraView)中存在的几个BUG。也欢迎在提出更多的使用配置需求。欢迎提出issue，一天之内回复。
 - [知乎matisse](https://github.com/zhihu/Matisse)

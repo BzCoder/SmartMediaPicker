@@ -4,6 +4,7 @@
     package="me.bzcoder.mediapicker.sample">
 
     <application
+        android:name="com.bzcoder.mediapicker.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,8 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.bzcoder.mediapicker.SampleFragmentActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.bzcoder.mediapicker.SampleFragmentActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

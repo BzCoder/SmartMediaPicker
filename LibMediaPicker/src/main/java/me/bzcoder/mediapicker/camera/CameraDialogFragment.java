@@ -17,6 +17,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import java.lang.ref.WeakReference;
+
 import me.bzcoder.mediapicker.R;
 import me.bzcoder.mediapicker.config.MediaPickerConfig;
 import me.bzcoder.mediapicker.photopicker.PhotoPickUtils;
@@ -34,8 +36,8 @@ public class CameraDialogFragment extends DialogFragment {
     private ImageView ivPickPhoto;
     private ImageView ivCancel;
     private MediaPickerConfig config;
-    private Fragment fragment;
-    private FragmentActivity fragmentActivity;
+    private WeakReference<Fragment> fragment;
+    private WeakReference<FragmentActivity> fragmentActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,20 +90,20 @@ public class CameraDialogFragment extends DialogFragment {
         ivTakePhoto = view.findViewById(R.id.iv_take_photo);
         ivTakePhoto.setOnClickListener(v -> {
             if (fragment != null) {
-                CameraUtils.startCamera(fragment, config);
+                CameraUtils.startCamera(fragment.get(), config);
             }
             if (fragmentActivity != null) {
-                CameraUtils.startCamera(fragmentActivity, config);
+                CameraUtils.startCamera(fragmentActivity.get(), config);
             }
             dismiss();
         });
         ivPickPhoto = view.findViewById(R.id.iv_pick_photo);
         ivPickPhoto.setOnClickListener(v -> {
             if (fragment != null) {
-                PhotoPickUtils.getAllSelector(fragment, config);
+                PhotoPickUtils.getAllSelector(fragment.get(), config);
             }
             if (fragmentActivity != null) {
-                PhotoPickUtils.getAllSelector(fragmentActivity, config);
+                PhotoPickUtils.getAllSelector(fragmentActivity.get(), config);
             }
 
             dismiss();
@@ -112,7 +114,7 @@ public class CameraDialogFragment extends DialogFragment {
 
 
     public void setConfig(Fragment fragment, MediaPickerConfig config) {
-        this.fragment = fragment;
+        this.fragment = new WeakReference<>(fragment);
         this.config = config;
         this.fragmentActivity = null;
 
@@ -121,6 +123,6 @@ public class CameraDialogFragment extends DialogFragment {
     public void setConfig(FragmentActivity fragmentActivity, MediaPickerConfig config) {
         this.fragment = null;
         this.config = config;
-        this.fragmentActivity = fragmentActivity;
+        this.fragmentActivity = new WeakReference<>(fragmentActivity);
     }
 }

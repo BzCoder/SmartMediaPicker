@@ -76,7 +76,7 @@ public class SampleFragment extends Fragment implements View.OnClickListener {
                 //最大图片大小 单位MB
                 .withMaxImageSize(5)
                 //前置摄像头拍摄是否镜像翻转图像 默认为true 与微信一致的话为false
-                .withisMirror(false)
+                .withIsMirror(false)
                 //设置图片加载引擎
                 .withImageEngine(new Glide4Engine());
     }

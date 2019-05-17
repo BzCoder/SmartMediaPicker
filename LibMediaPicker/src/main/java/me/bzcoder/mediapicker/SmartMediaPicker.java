@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.engine.ImageEngine;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +36,10 @@ import static android.app.Activity.RESULT_OK;
  */
 public class SmartMediaPicker {
     private volatile static SmartMediaPicker instance;
-    private CameraDialogFragment cameraDialogFragment;
     private FragmentManager manager;
-    private FragmentActivity fragmentActivity;
-    private Fragment fragment;
+    private CameraDialogFragment cameraDialogFragment;
+    private WeakReference<FragmentActivity>  fragmentActivity;
+    private WeakReference<Fragment>  fragment;
     private MediaPickerConfig config;
 
     private SmartMediaPicker() {
@@ -50,27 +51,27 @@ public class SmartMediaPicker {
     public void show() {
         //只启动照片选择
         if (config.getMediaPickerEnum() == MediaPickerEnum.PHOTO_PICKER) {
-            if (fragmentActivity != null) {
-                PhotoPickUtils.getAllSelector(fragmentActivity, config);
-            } else if (fragment != null) {
-                PhotoPickUtils.getAllSelector(fragment, config);
+            if (fragmentActivity.get() != null) {
+                PhotoPickUtils.getAllSelector(fragmentActivity.get(), config);
+            } else if (fragment.get() != null) {
+                PhotoPickUtils.getAllSelector(fragment.get(), config);
             }
         }
         //只启动相机
         else if (config.getMediaPickerEnum() == MediaPickerEnum.CAMERA) {
-            if (fragmentActivity != null) {
-                CameraUtils.startCamera(fragmentActivity, config);
-            } else if (fragment != null) {
-                CameraUtils.startCamera(fragment, config);
+            if (fragmentActivity.get() != null) {
+                CameraUtils.startCamera(fragmentActivity.get(), config);
+            } else if (fragment.get() != null) {
+                CameraUtils.startCamera(fragment.get(), config);
             }
 
         }
         //启动下方弹框
         else {
-            if (fragmentActivity != null) {
-                cameraDialogFragment.setConfig(fragmentActivity, config);
-            } else if (fragment != null) {
-                cameraDialogFragment.setConfig(fragment, config);
+            if (fragmentActivity.get() != null) {
+                cameraDialogFragment.setConfig(fragmentActivity.get(), config);
+            } else if (fragment.get() != null) {
+                cameraDialogFragment.setConfig(fragment.get(), config);
             }
             cameraDialogFragment.show(manager, "cameraDialogFragment");
         }
@@ -204,7 +205,7 @@ public class SmartMediaPicker {
             mediaPickerType = MediaPickerEnum.BOTH;
         }
 
-        public Builder withisMirror(boolean isMirror) {
+        public Builder withIsMirror(boolean isMirror) {
             this.isMirror = isMirror;
             return this;
         }
@@ -274,8 +275,8 @@ public class SmartMediaPicker {
             SmartMediaPicker smartMediaPicker = SmartMediaPicker.getInstance();
             MediaPickerConfig config = new MediaPickerConfig();
             smartMediaPicker.manager = manager;
-            smartMediaPicker.fragment = fragment;
-            smartMediaPicker.fragmentActivity = fragmentActivity;
+            smartMediaPicker.fragment = new WeakReference<>(fragment);
+            smartMediaPicker.fragmentActivity =  new WeakReference<>(fragmentActivity);
             config.setCountable(countable);
             config.setMirror(isMirror);
             config.setOriginalEnable(originalEnable);

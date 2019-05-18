@@ -15,17 +15,14 @@
 ## 改动
 ### v 1.1.1
   - 修复内存泄漏问题
-  - 修复 withIsMirror 命名大小写问题
+  - 修复 withIsMirror 方法命名大小写问题
 ### v 1.1.0
   - 新增 前置摄像头是否开启镜像翻转选项 isMirror
 ### v 1.0.9
-  - 修复底部弹窗无法跳转返回后无法获取到文件的BUG!!
-  - 优化Sample
-### v 1.0.8 有严重Bug弃用
-   - 新增单独调用相机，图片选择器功能
-   - SmartMediaPicker.builder()参数改为Fragment与FragmentActivity
-   - 修复文字提示BUG
-   - 修复ResultCode BUG
+  - 新增单独调用相机，图片选择器功能
+  - SmartMediaPicker.builder()参数改为Fragment与FragmentActivity
+  - 修复文字提示 BUG
+  - 修复ResultCode BUG
 ### v 1.0.7
    - 添加实用工具类
    - 不再直接依赖Glide

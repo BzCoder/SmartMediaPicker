@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         builder = SmartMediaPicker.builder(this)
                 //最大图片选择数目
-                .withMaxImageSelectable(5)
+                .withMaxImageSelectable(0)
                 //最大视频选择数目
                 .withMaxVideoSelectable(1)
                 //图片选择器是否显示数字

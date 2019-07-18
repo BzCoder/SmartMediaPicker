@@ -40,9 +40,11 @@ public class CameraActivity extends AppCompatActivity {
      */
     public int buttonState;
 
+
     public int duration;
 
     public boolean isMirror;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +74,7 @@ public class CameraActivity extends AppCompatActivity {
 
             @Override
             public void AudioPermissionError() {
-                Toast.makeText(CameraActivity.this, "给点录音权限可以?", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CameraActivity.this, "需要打开录音权限?", Toast.LENGTH_SHORT).show();
             }
         });
         if (buttonState != 0)
@@ -159,6 +161,11 @@ public class CameraActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         jCameraView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void finishActivityWithAnim() {

@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Rect;
@@ -96,13 +95,16 @@ public class CameraInterface implements Camera.PreviewCallback {
     public static final int TYPE_RECORDER = 0x090;
     public static final int TYPE_CAPTURE = 0x091;
     private int nowScaleRate = 0;
-    private int recordScleRate = 0;
+    private int recordScaleRate = 0;
 
-    //视频质量
+
+    /**
+     * 视频质量
+     */
     private int mediaQuality = JCameraView.MEDIA_QUALITY_MIDDLE;
 
 
-    private SensorManager sm = null;
+    private SensorManager sensorManager = null;
 
     //获取CameraInterface单例
     public static synchronized CameraInterface getInstance() {
@@ -134,6 +136,7 @@ public class CameraInterface implements Camera.PreviewCallback {
             rotationAnimation();
         }
 
+        @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     };
@@ -231,10 +234,10 @@ public class CameraInterface implements Camera.PreviewCallback {
                 if (zoom >= 0) {
                     //每移动50个像素缩放一个级别
                     int scaleRate = (int) (zoom / 40);
-                    if (scaleRate <= mParams.getMaxZoom() && scaleRate >= nowScaleRate && recordScleRate != scaleRate) {
+                    if (scaleRate <= mParams.getMaxZoom() && scaleRate >= nowScaleRate && recordScaleRate != scaleRate) {
                         mParams.setZoom(scaleRate);
                         mCamera.setParameters(mParams);
-                        recordScleRate = scaleRate;
+                        recordScaleRate = scaleRate;
                     }
                 }
                 break;
@@ -768,18 +771,18 @@ public class CameraInterface implements Camera.PreviewCallback {
 
 
     void registerSensorManager(Context context) {
-        if (sm == null) {
-            sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        if (sensorManager == null) {
+            sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         }
-        sm.registerListener(sensorEventListener, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager
+        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager
                 .SENSOR_DELAY_NORMAL);
     }
 
     void unregisterSensorManager(Context context) {
-        if (sm == null) {
-            sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        if (sensorManager == null) {
+            sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         }
-        sm.unregisterListener(sensorEventListener);
+        sensorManager.unregisterListener(sensorEventListener);
     }
 
     void isPreview(boolean res) {

@@ -78,7 +78,7 @@
                 .show();
 ```
 
-### 图片加载引擎 ImageEngine
+### ImageEngine 图片加载引擎 :
 需要自己实现图片加载，图片加载类需要实现ImageEngine接口，当然也可以直接复制[Glide4Engine.java](https://github.com/BzCoder/SmartMediaPicker/blob/master/app/src/main/java/com/bzcoder/mediapicker/Glide4Engine.java)
 
 

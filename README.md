@@ -13,6 +13,9 @@
 |![](image/20190315005039.gif) | ![](image/20190315005454.gif) |
 
 ## 改动
+### v 1.1.3
+  - 修复视频模式下，录像界面文字提示错误
+  - 修复视频最大长度设置无效的问题 [#4](https://github.com/BzCoder/SmartMediaPicker/issues/4)
 ### v 1.1.2
   - 只要在设置的时候withMaxImageSelectable（withMaxVideoSelectable）设置为0，就可以只显示视频（图片）
 ### v 1.1.1
@@ -46,7 +49,7 @@
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.2'
+	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.3'
 	}
 ```
 ### 代码添加：

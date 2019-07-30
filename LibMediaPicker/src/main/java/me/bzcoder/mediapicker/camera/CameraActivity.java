@@ -86,7 +86,7 @@ public class CameraActivity extends AppCompatActivity {
         if (JCameraView.BUTTON_STATE_ONLY_CAPTURE == buttonState) {//只拍照
             jCameraView.setTip("轻触拍照");
         } else if (JCameraView.BUTTON_STATE_ONLY_RECORDER == buttonState) {//只拍摄
-            jCameraView.setTip("长按拍照");
+            jCameraView.setTip("长按拍摄");
         } else {
             jCameraView.setTip("轻触拍照，长按录制视频");
         }

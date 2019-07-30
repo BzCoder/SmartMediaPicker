@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //图片选择器是否显示数字
                 .withCountable(true)
                 //最大视频长度
-                .withMaxVideoLength(15 * 1000)
+                .withMaxVideoLength(5 * 1000)
                 //最大视频文件大小 单位MB
                 .withMaxVideoSize(1)
                 //最大图片高度 默认1920

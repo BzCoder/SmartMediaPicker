@@ -116,6 +116,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
 
     public void setDuration(int duration) {
         this.duration = duration;
+        mCaptureLayout.setDuration(duration);
     }
 
     //缩放梯度

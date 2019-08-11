@@ -51,7 +51,7 @@ public class BorrowPictureState implements State {
     }
 
     @Override
-    public void capture(boolean isMirror) {
+    public void capture() {
 
     }
 

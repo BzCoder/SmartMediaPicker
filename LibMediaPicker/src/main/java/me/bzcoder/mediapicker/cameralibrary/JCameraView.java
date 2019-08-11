@@ -110,10 +110,6 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     private int iconRight = 0;      //右图标
     private int duration = 10 * 1000;       //录制时间
 
-
-    private boolean isMirror = true;       //是否镜像
-
-
     public void setDuration(int duration) {
         this.duration = duration;
         mCaptureLayout.setDuration(duration);
@@ -196,7 +192,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             public void takePictures() {
                 mSwitchCamera.setVisibility(INVISIBLE);
                 mFlashLamp.setVisibility(INVISIBLE);
-                machine.capture(isMirror);
+                machine.capture();
             }
 
             @Override
@@ -211,12 +207,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
                 mCaptureLayout.setTextWithAnimation("录制时间过短");
                 mSwitchCamera.setVisibility(VISIBLE);
                 mFlashLamp.setVisibility(VISIBLE);
-                postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        machine.stopRecord(true, time);
-                    }
-                }, 1500 - time);
+                postDelayed(() -> machine.stopRecord(true, time), 1500 - time);
             }
 
             @Override
@@ -609,12 +600,8 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         }
     }
 
-    public boolean isMirror() {
-        return isMirror;
-    }
-
     public void setMirror(boolean mirror) {
-        isMirror = mirror;
+        CameraInterface.getInstance().setMirror(mirror);
     }
 
 }

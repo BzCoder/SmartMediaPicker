@@ -79,7 +79,7 @@ public class CameraInterface implements Camera.PreviewCallback {
     private String videoFileAbsPath;
     private Bitmap videoFirstFrame = null;
 
-    private ErrorListener errorLisenter;
+    private ErrorListener errorListener;
 
     private ImageView mSwitchView;
     private ImageView mFlashLamp;
@@ -97,7 +97,10 @@ public class CameraInterface implements Camera.PreviewCallback {
     private int nowScaleRate = 0;
     private int recordScaleRate = 0;
 
-
+    /**
+     * 是否镜像
+     */
+    private boolean isMirror = false;
     /**
      * 视频质量
      */
@@ -108,11 +111,13 @@ public class CameraInterface implements Camera.PreviewCallback {
 
     //获取CameraInterface单例
     public static synchronized CameraInterface getInstance() {
-        if (mCameraInterface == null)
+        if (mCameraInterface == null) {
             synchronized (CameraInterface.class) {
-                if (mCameraInterface == null)
+                if (mCameraInterface == null) {
                     mCameraInterface = new CameraInterface();
+                }
             }
+        }
         return mCameraInterface;
     }
 
@@ -298,8 +303,8 @@ public class CameraInterface implements Camera.PreviewCallback {
      */
     void doOpenCamera(CameraOpenOverCallback callback) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            if (!CheckPermission.isCameraUseable(SELECTED_CAMERA) && this.errorLisenter != null) {
-                this.errorLisenter.onError();
+            if (!CheckPermission.isCameraUseable(SELECTED_CAMERA) && this.errorListener != null) {
+                this.errorListener.onError();
                 return;
             }
         }
@@ -320,8 +325,8 @@ public class CameraInterface implements Camera.PreviewCallback {
             this.mCamera = Camera.open(id);
         } catch (Exception var3) {
             var3.printStackTrace();
-            if (this.errorLisenter != null) {
-                this.errorLisenter.onError();
+            if (this.errorListener != null) {
+                this.errorListener.onError();
             }
         }
 
@@ -431,7 +436,7 @@ public class CameraInterface implements Camera.PreviewCallback {
      * 销毁Camera
      */
     void doDestroyCamera() {
-        errorLisenter = null;
+        errorListener = null;
         if (null != mCamera) {
             try {
                 mCamera.setPreviewCallback(null);
@@ -459,7 +464,7 @@ public class CameraInterface implements Camera.PreviewCallback {
      */
     private int nowAngle;
 
-    public void takePicture(boolean isMirror,final TakePictureCallback callback) {
+    public void takePicture(final TakePictureCallback callback) {
         if (mCamera == null) {
             return;
         }
@@ -483,7 +488,7 @@ public class CameraInterface implements Camera.PreviewCallback {
                 } else if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
                     //翻转bitmap (-1,1)左右翻转  (1,-1)上下翻转
                     matrix.setRotate(360 - nowAngle);
-                    if(!isMirror){
+                    if (!isMirror) {
                         matrix.postScale(-1, 1);
                     }
                 }
@@ -618,14 +623,14 @@ public class CameraInterface implements Camera.PreviewCallback {
         } catch (IllegalStateException e) {
             e.printStackTrace();
             Log.i("CJT", "startRecord IllegalStateException");
-            if (this.errorLisenter != null) {
-                this.errorLisenter.onError();
+            if (this.errorListener != null) {
+                this.errorListener.onError();
             }
         } catch (IOException e) {
             e.printStackTrace();
             Log.i("CJT", "startRecord IOException");
-            if (this.errorLisenter != null) {
-                this.errorLisenter.onError();
+            if (this.errorListener != null) {
+                this.errorListener.onError();
             }
         } catch (RuntimeException e) {
             Log.i("CJT", "startRecord RuntimeException");
@@ -748,7 +753,7 @@ public class CameraInterface implements Camera.PreviewCallback {
     }
 
     void setErrorLinsenter(ErrorListener errorLisenter) {
-        this.errorLisenter = errorLisenter;
+        this.errorListener = errorLisenter;
     }
 
 
@@ -787,6 +792,14 @@ public class CameraInterface implements Camera.PreviewCallback {
 
     void isPreview(boolean res) {
         this.isPreviewing = res;
+    }
+
+    public boolean isMirror() {
+        return isMirror && SELECTED_CAMERA == CAMERA_FRONT_POSITION;
+    }
+
+    public void setMirror(boolean isMirror) {
+        this.isMirror = isMirror;
     }
 
 }

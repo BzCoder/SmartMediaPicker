@@ -93,8 +93,8 @@ public class CameraMachine implements State {
     }
 
     @Override
-    public void capture(boolean isMirror) {
-        state.capture(isMirror);
+    public void capture() {
+        state.capture();
     }
 
     @Override

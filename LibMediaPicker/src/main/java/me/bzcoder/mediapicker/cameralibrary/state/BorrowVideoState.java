@@ -52,7 +52,7 @@ public class BorrowVideoState implements State {
     }
 
     @Override
-    public void capture(boolean isMirror) {
+    public void capture() {
 
     }
 

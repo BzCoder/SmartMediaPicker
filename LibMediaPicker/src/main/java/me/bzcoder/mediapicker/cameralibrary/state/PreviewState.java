@@ -4,9 +4,13 @@ import android.graphics.Bitmap;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
-import me.bzcoder.mediapicker.cameralibrary.JCameraView;
-import me.bzcoder.mediapicker.cameralibrary.util.LogUtil;
+import com.daasuu.mp4compose.FillMode;
+import com.daasuu.mp4compose.composer.Mp4Composer;
+
 import me.bzcoder.mediapicker.cameralibrary.CameraInterface;
+import me.bzcoder.mediapicker.cameralibrary.JCameraView;
+import me.bzcoder.mediapicker.cameralibrary.util.FileUtil;
+import me.bzcoder.mediapicker.cameralibrary.util.LogUtil;
 
 /**
  * =====================================
@@ -55,8 +59,8 @@ class PreviewState implements State {
     }
 
     @Override
-    public void capture(boolean isMirror) {
-        CameraInterface.getInstance().takePicture(isMirror,(bitmap, isVertical) -> {
+    public void capture() {
+        CameraInterface.getInstance().takePicture((bitmap, isVertical) -> {
             machine.getView().showPicture(bitmap, isVertical);
             machine.setState(machine.getBorrowPictureState());
             LogUtil.i("capture");
@@ -70,18 +74,19 @@ class PreviewState implements State {
 
     @Override
     public void stopRecord(final boolean isShort, long time) {
-        CameraInterface.getInstance().stopRecord(isShort, new CameraInterface.StopRecordCallback() {
-            @Override
-            public void recordResult(String url, Bitmap firstFrame) {
-                if (isShort) {
-                    machine.getView().resetState(JCameraView.TYPE_SHORT);
-                } else {
-                    machine.getView().playVideo(firstFrame, url);
-                    machine.setState(machine.getBorrowVideoState());
-                }
+        CameraInterface.getInstance().stopRecord(isShort, (url, firstFrame) -> {
+            if (isShort) {
+                machine.getView().resetState(JCameraView.TYPE_SHORT);
+            }
+            if (CameraInterface.getInstance().isMirror()  ) {
+                flipHorizontalVideo(url, firstFrame);
+            } else {
+                machine.getView().playVideo(firstFrame, url);
+                machine.setState(machine.getBorrowVideoState());
             }
         });
     }
+
 
     @Override
     public void cancel(SurfaceHolder holder, float screenProp) {
@@ -102,5 +107,34 @@ class PreviewState implements State {
     @Override
     public void flash(String mode) {
         CameraInterface.getInstance().setFlashMode(mode);
+    }
+
+
+    private void flipHorizontalVideo(String url, Bitmap firstFrame) {
+        String convert_url = url.replace("video", "covert_video");
+        new Mp4Composer(url, convert_url)
+                .flipHorizontal(true)
+                .fillMode(FillMode.PRESERVE_ASPECT_FIT)
+                .listener(new Mp4Composer.Listener() {
+                    @Override
+                    public void onProgress(double progress) {
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        FileUtil.deleteFile(url);
+                        machine.getView().playVideo(firstFrame, convert_url);
+                        machine.setState(machine.getBorrowVideoState());
+                    }
+
+                    @Override
+                    public void onCanceled() {
+                    }
+
+                    @Override
+                    public void onFailed(Exception exception) {
+                    }
+                })
+                .start();
     }
 }

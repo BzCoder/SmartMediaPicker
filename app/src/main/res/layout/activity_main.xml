@@ -75,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:inputType="number"
                 android:background="#0000"
                 android:text="1" />
         </RelativeLayout>
@@ -95,6 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:inputType="number"
                 android:background="#0000"
                 android:text="5000" />
         </RelativeLayout>
@@ -115,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:inputType="number"
                 android:background="#0000"
                 android:text="1" />
         </RelativeLayout>
@@ -136,6 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:inputType="number"
                 android:background="#0000"
                 android:text="1920" />
         </RelativeLayout>
@@ -156,6 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:inputType="number"
                 android:background="#0000"
                 android:text="1080" />
         </RelativeLayout>
@@ -175,6 +180,7 @@
                 android:id="@+id/edit_max_image_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:layout_alignParentRight="true"
                 android:background="#0000"
                 android:text="5" />

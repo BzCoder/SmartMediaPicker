@@ -488,7 +488,7 @@ public class CameraInterface implements Camera.PreviewCallback {
                 } else if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
                     //翻转bitmap (-1,1)左右翻转  (1,-1)上下翻转
                     matrix.setRotate(360 - nowAngle);
-                    if (!isMirror) {
+                    if (isMirror) {
                         matrix.postScale(-1, 1);
                     }
                 }

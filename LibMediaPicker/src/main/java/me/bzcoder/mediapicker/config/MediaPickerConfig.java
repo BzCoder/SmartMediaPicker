@@ -19,7 +19,7 @@ public class MediaPickerConfig {
     private boolean countable;
 
     /**
-     * 前置摄像头拍摄是否启用镜像 默认开启
+     * 前置摄像头拍摄是否启用镜像
      */
     private boolean isMirror;
 

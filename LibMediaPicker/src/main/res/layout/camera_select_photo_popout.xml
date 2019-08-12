@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="@mipmap/take_photo" />
+        android:src="@drawable/take_photo" />
 
     <ImageView
         android:id="@+id/iv_pick_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="@mipmap/pick_photo" />
+        android:src="@drawable/pick_photo" />
 
     <ImageView
         android:layout_marginTop="6dp"
@@ -25,5 +25,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="@mipmap/cancel_photo" />
+        android:src="@drawable/cancel_photo" />
 </LinearLayout>

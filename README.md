@@ -12,7 +12,15 @@
 |:------------------------------:|:---------------------------------:|
 |![](image/20190315005039.gif) | ![](image/20190315005454.gif) |
 
+| 新的示例                  |新的示例                     | 
+|:------------------------------:|:---------------------------------:|
+|![](image/20190812103923.jpg) | ![](image/20190812104619.jpg) |
+
 ## 改动
+### v 1.1.4
+  - 新增调整前置摄像头录像镜像问题
+  - 修复图片在部分手机上拉伸的问题
+  - 重写Sample工程
 ### v 1.1.3
   - 修复视频模式下，录像界面文字提示错误
   - 修复视频最大长度设置无效的问题 [#4](https://github.com/BzCoder/SmartMediaPicker/issues/4)
@@ -49,7 +57,9 @@
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.3'
+	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.4'
+	         //如果需要使用前置摄像头录像镜像调整功能需要额外引用
+	        implementation'com.github.MasayukiSuda:Mp4Composer-android:v0.3.2'
 	}
 ```
 ### 代码添加：

@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.Arrays;
@@ -21,12 +25,24 @@ import me.bzcoder.mediapicker.sample.R;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+
     private TextView tvPath;
-    private Button btnPath;
-    private Button btnStartCamera;
-    private Button btnStartPhoto;
-    private SmartMediaPicker.Builder builder;
+    private EditText editMaxImage;
+    private EditText editMaxVideo;
+    private EditText editMaxVideoLength;
+    private EditText editMaxVideoSize;
+    private EditText editMaxImageHeight;
+    private EditText editMaxImageWidth;
+    private EditText editMaxImageSize;
+    private SwitchCompat switchMirror;
+    private SwitchCompat switchCountNumber;
+    private RadioButton radioDialog;
+    private RadioButton radioCamera;
+    private RadioButton radioPhoto;
+    private RadioGroup radioGroupStrategy;
     private Button jumpActivity;
+    private Button start;
+    private MediaPickerEnum mediaPickerType = MediaPickerEnum.BOTH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,67 +52,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        tvPath = findViewById(R.id.tv_path);
+        tvPath = (TextView) findViewById(R.id.tv_path);
         tvPath.setOnClickListener(this);
-        btnPath = findViewById(R.id.btn_path);
-        btnPath.setOnClickListener(this);
-        btnStartCamera = findViewById(R.id.btn_start_camera);
-        btnStartCamera.setOnClickListener(this);
-        btnStartPhoto = findViewById(R.id.btn_start_photo);
-        btnStartPhoto.setOnClickListener(this);
-
-        builder = SmartMediaPicker.builder(this)
-                //最大图片选择数目
-                .withMaxImageSelectable(0)
-                //最大视频选择数目
-                .withMaxVideoSelectable(1)
-                //图片选择器是否显示数字
-                .withCountable(true)
-                //最大视频长度
-                .withMaxVideoLength(5 * 1000)
-                //最大视频文件大小 单位MB
-                .withMaxVideoSize(1)
-                //最大图片高度 默认1920
-                .withMaxHeight(1920)
-                //最大图片宽度 默认1920
-                .withMaxWidth(1920)
-                //最大图片大小 单位MB
-                .withMaxImageSize(5)
-                //前置摄像头拍摄是否镜像翻转图像 默认为true 与微信一致的话为false
-                .withIsMirror(true)
-                //设置图片加载引擎
-                .withImageEngine(new Glide4Engine());
+        editMaxImage = (EditText) findViewById(R.id.edit_max_image);
+        editMaxImage.setOnClickListener(this);
+        editMaxVideo = (EditText) findViewById(R.id.edit_max_video);
+        editMaxVideo.setOnClickListener(this);
+        editMaxVideoLength = (EditText) findViewById(R.id.edit_max_video_length);
+        editMaxVideoLength.setOnClickListener(this);
+        editMaxVideoSize = (EditText) findViewById(R.id.edit_max_video_size);
+        editMaxVideoSize.setOnClickListener(this);
+        editMaxImageHeight = (EditText) findViewById(R.id.edit_max_image_height);
+        editMaxImageHeight.setOnClickListener(this);
+        editMaxImageWidth = (EditText) findViewById(R.id.edit_max_image_width);
+        editMaxImageWidth.setOnClickListener(this);
+        editMaxImageSize = (EditText) findViewById(R.id.edit_max_image_size);
+        editMaxImageSize.setOnClickListener(this);
+        switchMirror = (SwitchCompat) findViewById(R.id.switchMirror);
+        switchMirror.setOnClickListener(this);
+        switchCountNumber = (SwitchCompat) findViewById(R.id.switchCountNumber);
+        switchCountNumber.setOnClickListener(this);
+        radioDialog = (RadioButton) findViewById(R.id.radioDialog);
+        radioDialog.setOnClickListener(this);
+        radioCamera = (RadioButton) findViewById(R.id.radioCamera);
+        radioCamera.setOnClickListener(this);
+        radioPhoto = (RadioButton) findViewById(R.id.radioPhotoPicker);
+        radioPhoto.setOnClickListener(this);
+        radioGroupStrategy = (RadioGroup) findViewById(R.id.radioGroupStrategy);
+        radioGroupStrategy.setOnClickListener(this);
         jumpActivity = (Button) findViewById(R.id.jump_activity);
         jumpActivity.setOnClickListener(this);
+        start = (Button) findViewById(R.id.start);
+        start.setOnClickListener(this);
+        radioGroupStrategy.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.radioDialog:
+                    mediaPickerType = MediaPickerEnum.BOTH;
+                    break;
+                case R.id.radioCamera:
+                    mediaPickerType = MediaPickerEnum.CAMERA;
+                    break;
+                case R.id.radioPhotoPicker:
+                    mediaPickerType = MediaPickerEnum.PHOTO_PICKER;
+                    break;
+                default:
+                    mediaPickerType = MediaPickerEnum.BOTH;
+                    break;
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_path:
-                builder.withMediaPickerType(MediaPickerEnum.BOTH)
-                        .build()
-                        .show();
-                break;
-            case R.id.btn_start_camera:
-                builder.withMediaPickerType(MediaPickerEnum.CAMERA)
-                        .build()
-                        .show();
-                break;
-            case R.id.btn_start_photo:
-                builder.withMediaPickerType(MediaPickerEnum.PHOTO_PICKER)
-                        .build()
-                        .show();
-                break;
-            case R.id.jump_activity:
-                Intent intent = new Intent(MainActivity.this, SampleFragmentActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                break;
-
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -111,4 +116,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tvPath.setText("NO DATA");
         }
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.jump_activity:
+                Intent intent = new Intent(this, SampleFragmentActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.start:
+                SmartMediaPicker.builder(this)
+                        //最大图片选择数目
+                        .withMaxImageSelectable(Integer.parseInt(editMaxImage.getText().toString()))
+                        //最大视频选择数目
+                        .withMaxVideoSelectable(Integer.parseInt(editMaxVideo.getText().toString()))
+                        //图片选择器是否显示数字
+                        .withCountable(switchCountNumber.isChecked())
+                        //最大视频长度 单位ms
+                        .withMaxVideoLength(Integer.parseInt(editMaxVideoLength.getText().toString()))
+                        //最大视频文件大小 单位MB
+                        .withMaxVideoSize(Integer.parseInt(editMaxVideoSize.getText().toString()))
+                        //最大图片高度 默认1920
+                        .withMaxHeight(Integer.parseInt(editMaxImageHeight.getText().toString()))
+                        //最大图片宽度 默认1920
+                        .withMaxWidth(Integer.parseInt(editMaxImageWidth.getText().toString()))
+                        //最大图片大小 单位MB
+                        .withMaxImageSize(Integer.parseInt(editMaxImageSize.getText().toString()))
+                        //前置摄像头拍摄是否镜像翻转图像 默认为true 与微信一致的话为false
+                        .withIsMirror(switchMirror.isChecked())
+                        //设置图片加载引擎
+                        .withImageEngine(new Glide4Engine())
+                        //选择类型
+                        .withMediaPickerType(mediaPickerType)
+                        .build()
+                        .show();
+                break;
+            default:
+                break;
+        }
+    }
+
 }

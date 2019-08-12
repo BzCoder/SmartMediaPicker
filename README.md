@@ -17,7 +17,7 @@
 |![](image/20190812103923.jpg) | ![](image/20190812104619.jpg) |
 
 ## 改动
-### v 1.1.4
+### v 1.1.5
   - 新增调整前置摄像头录像镜像问题
     ```groovy
     //如果需要启用前置摄像头录像镜像调整功能需要额外引用以下库
@@ -61,7 +61,7 @@
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.4'
+	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.5'
 	         //如果需要启用前置摄像头录像镜像调整功能需要额外引用以下库
 	        implementation'com.github.MasayukiSuda:Mp4Composer-android:v0.3.2'
 	}
@@ -87,7 +87,7 @@
                 .withMaxImageSize(5)
                 //设置图片加载引擎
                 .withImageEngine(new Glide4Engine())
-                //前置摄像头拍摄是否镜像翻转图像 默认为true 与微信一致的话为false
+                //前置摄像头拍摄是否镜像翻转图像 
                 .withIsMirror(false)
 	             //弹出类别，默认弹出底部选择栏，也可以选择单独跳转
                 .withMediaPickerType(MediaPickerEnum.BOTH)

@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .withMaxWidth(Integer.parseInt(editMaxImageWidth.getText().toString()))
                         //最大图片大小 单位MB
                         .withMaxImageSize(Integer.parseInt(editMaxImageSize.getText().toString()))
-                        //前置摄像头拍摄是否镜像翻转图像 默认为true 与微信一致的话为false
+                        //前置摄像头拍摄是否开启镜像翻转调整图像 默认为true
                         .withIsMirror(switchMirror.isChecked())
                         //设置图片加载引擎
                         .withImageEngine(new Glide4Engine())

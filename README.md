@@ -19,6 +19,10 @@
 ## 改动
 ### v 1.1.4
   - 新增调整前置摄像头录像镜像问题
+    ```groovy
+    //如果需要启用前置摄像头录像镜像调整功能需要额外引用以下库
+    implementation'com.github.MasayukiSuda:Mp4Composer-android:v0.3.2'
+    ```
   - 修复图片在部分手机上拉伸的问题
   - 重写Sample工程
 ### v 1.1.3
@@ -58,7 +62,7 @@
 
 	dependencies {
 	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.4'
-	         //如果需要使用前置摄像头录像镜像调整功能需要额外引用
+	         //如果需要启用前置摄像头录像镜像调整功能需要额外引用以下库
 	        implementation'com.github.MasayukiSuda:Mp4Composer-android:v0.3.2'
 	}
 ```

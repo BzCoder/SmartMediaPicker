@@ -17,6 +17,8 @@
 |![](image/20190812103923.jpg) | ![](image/20190812104619.jpg) |
 
 ## 改动
+### v 1.1.6
+  - 修复录制时间过短闪退的BUG
 ### v 1.1.5
   - 新增调整前置摄像头录像镜像问题
     ```groovy
@@ -61,7 +63,7 @@
 
 
 	dependencies {
-	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.5'
+	        implementation 'com.github.BzCoder:SmartMediaPicker:1.1.6'
 	         //如果需要启用前置摄像头录像镜像调整功能需要额外引用以下库
 	        implementation'com.github.MasayukiSuda:Mp4Composer-android:v0.3.2'
 	}

@@ -89,7 +89,7 @@
                 .withImageEngine(new Glide4Engine())
                 //前置摄像头拍摄是否镜像翻转图像 
                 .withIsMirror(false)
-	             //弹出类别，默认弹出底部选择栏，也可以选择单独跳转
+	        //弹出类别，默认弹出底部选择栏，也可以选择单独跳转
                 .withMediaPickerType(MediaPickerEnum.BOTH)
                 .build()
                 .show();

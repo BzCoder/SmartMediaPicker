@@ -78,7 +78,7 @@ class PreviewState implements State {
             if (isShort) {
                 machine.getView().resetState(JCameraView.TYPE_SHORT);
             }
-            if (CameraInterface.getInstance().isMirror()  ) {
+            else if (CameraInterface.getInstance().isMirror()  ) {
                 flipHorizontalVideo(url, firstFrame);
             } else {
                 machine.getView().playVideo(firstFrame, url);
